@@ -1,1 +1,78 @@
+.App {
+	width : 100vw;
+	height : 100vh;
+	background-color : gray;
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+.shape {
+	width : 350px;
+	height : 350px;
+	display : flex;
+	justify-content : center;
+	align-items : center;
+	background-color : white;
+}
+
+.circle1 {
+	position : absolute;
+	background-color : gray;
+	width : 250px;
+	height : 250px;
+	border-radius : 50%;
+	z-index : 1;
+	animation : circle1-beat 5s linear infinite;
+}
+
+.circle2 {
+	position : absolute;
+	background-color : black;
+	width : 170px;
+	height : 170px;
+	border-radius : 50%;
+	z-index : 2;
+	animation : circle2-beat 5s linear infinite;
+}
+
+@keyframes circle1-beat {
+	from {
+		-webkit-box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
+		-moz-box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
+		box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
+	}
+	to {
+		-webkit-box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
+		-moz-box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
+		box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
+	}
+}
+
+@keyframes circle2-beat {
+	from {
+		-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
+		-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
+		box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
+	}
+	to {
+		-webkit-box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
+		-moz-box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
+		box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
+	}
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
