@@ -1,0 +1,2 @@
+(window["webpackJsonppomodoro-clock"]=window["webpackJsonppomodoro-clock"]||[]).push([[0],[,,,function(o,n,e){o.exports=e(10)},,,,,function(o,n,e){},function(o,n,e){},function(o,n,e){"use strict";e.r(n);var t=e(0),c=e.n(t),r=e(2),a=e.n(r);e(8),e(9);var l=function(){return c.a.createElement("div",{className:"App"},"hello")};a.a.render(c.a.createElement(l,null),document.getElementById("root"))}],[[3,1,2]]]);
+//# sourceMappingURL=main.7b0cf2a8.chunk.js.map
