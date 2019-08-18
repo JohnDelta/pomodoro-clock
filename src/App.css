@@ -1,78 +1,71 @@
 .App {
 	width : 100vw;
 	height : 100vh;
-	background-color : gray;
 	display : flex;
 	justify-content : center;
 	align-items : center;
 }
 
-.shape {
-	width : 350px;
-	height : 350px;
-	display : flex;
-	justify-content : center;
-	align-items : center;
-	background-color : white;
-}
-
-.circle1 {
+.wrapper {
 	position : absolute;
-	background-color : gray;
-	width : 250px;
-	height : 250px;
-	border-radius : 50%;
-	z-index : 1;
-	animation : circle1-beat 5s linear infinite;
+	width : 120px;
+	height : 120px;
+	background-color : beige;
+	clip : rect(0px,120px,120px,60px);
+	
+	animation-name : wrapper-show;
+	animation-fill-mode : forwards;
+	animation-timing-function : linear;
+	animation-duration : 0.1s;
+	animation-delay : 3s;
 }
 
-.circle2 {
-	position : absolute;
-	background-color : black;
-	width : 170px;
-	height : 170px;
-	border-radius : 50%;
-	z-index : 2;
-	animation : circle2-beat 5s linear infinite;
+/* Set the progress bar */
+.circle {
+	width: 100px;
+	height : 100px;
+	border : 10px solid green;
+	border-radius: 50%;
+	clip : rect(0px,60px,120px,0px);
+	position: absolute;
 }
 
-@keyframes circle1-beat {
+.right-spin {
+	animation-name : right-spin;
+	animation-fill-mode : forwards;
+	animation-timing-function : linear;
+	animation-duration : 3s;
+	animation-delay : 0s;
+}
+
+.left-spin {
+	animation-name : left-spin;
+	animation-fill-mode : forwards;
+	animation-timing-function : linear;
+	animation-duration : 3s;
+	animation-delay : 3s;
+}
+
+@keyframes right-spin {
 	from {
-		-webkit-box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
-		-moz-box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
-		box-shadow: 0px 0px 4px 0px rgba(128,128,128,0.8);
+		transform : rotate(0deg);
 	}
 	to {
-		-webkit-box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
-		-moz-box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
-		box-shadow: 0px 0px 21px 37px rgba(128,128,128,1);
+		transform : rotate(180deg);
 	}
 }
 
-@keyframes circle2-beat {
+@keyframes left-spin {
 	from {
-		-webkit-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
-		-moz-box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
-		box-shadow: 0px 0px 4px 0px rgba(0,0,0,0.8);
+		transform : rotate(180deg);
 	}
 	to {
-		-webkit-box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
-		-moz-box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
-		box-shadow: 0px 0px 21px 37px rgba(0,0,0,1);
+		transform : rotate(360deg);
 	}
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+@keyframes wrapper-show {
+	to {
+		clip : rect(auto,auto,auto,auto);
+	}
+}

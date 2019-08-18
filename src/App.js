@@ -4,9 +4,9 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-		<div className="shape">
-			<div className="circle1" />
-			<div className="circle2" />
+		<div className="wrapper" data-anim="base wrapper">
+		  <div className="circle left-spin" data-anim="base right"></div>
+		  <div className="circle right-spin" data-anim="base right"></div>
 		</div>
     </div>
   );
