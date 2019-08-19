@@ -1,15 +1,16 @@
 import React from 'react';
 import './App.css';
+import CircularProgressBar from './CircularProgressBar.js';
 
-function App() {
-  return (
-    <div className="App">
-		<div className="wrapper" data-anim="base wrapper">
-		  <div className="circle left-spin" data-anim="base right"></div>
-		  <div className="circle right-spin" data-anim="base right"></div>
-		</div>
-    </div>
-  );
+class App extends React.Component {
+
+	render() {
+		return (
+			<div className="App">
+				<CircularProgressBar time={"10s"}/>
+			</div>
+		);
+	}
 }
 
 export default App;
