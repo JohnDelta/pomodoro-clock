@@ -1,59 +1,95 @@
 
+.CircularProgressBar {
+	position:absolute;
+	display : -webkit-box;
+	display : -ms-flexbox;
+	display : flex;
+	-webkit-box-pack : center;
+	    -ms-flex-pack : center;
+	        justify-content : center;
+	-webkit-box-align : center;
+	    -ms-flex-align : center;
+	        align-items : center;
+	-webkit-transform : scale(1.5);
+	    -ms-transform : scale(1.5);
+	        transform : scale(1.5);
+}
+
 .wrapper {
 	position : absolute;
-	width : 120px;
-	height : 120px;
-	background-color : transparent;
-	clip : rect(0px,120px,120px,60px);
+	width : 300px;
+	height : 300px;
 	
-	animation-name : wrapper-show;
-	animation-fill-mode : forwards;
-	animation-timing-function : linear;
-	animation-duration : 0.1s;
+	-webkit-animation-name : wrapper-show;
+	        animation-name : wrapper-show;
+	-webkit-animation-fill-mode : forwards;
+	        animation-fill-mode : forwards;
+	-webkit-animation-timing-function : linear;
+	        animation-timing-function : linear;
+	-webkit-animation-duration : 0.1s;
+	        animation-duration : 0.1s;
 }
 
 /* Set the progress bar */
 .circle {
-	width: 100px;
-	height : 100px;
-	border : 10px solid green;
+	width: 270px;
+	height : 270px;
+	border : 14px solid green;
 	border-radius: 50%;
-	clip : rect(0px,60px,120px,0px);
 	position: absolute;
+	clip : rect(0px,149px,298px,0px);
+	z-index : 10;
+	
+	-webkit-animation-timing-function : linear;
+	        animation-timing-function : linear;	
+	animation-fill-mode : forwards;
+}
+
+.circle-background {
+	width: 260px;
+	height : 260px;
+	border : 25px solid gray;
+	border-radius: 50%;
+	position: absolute;
+	z-index : 5;
 }
 
 .right-spin {
-	animation-name : right-spin;
-	animation-fill-mode : forwards;
-	animation-timing-function : linear;
+	-webkit-transform : rotate(180deg);
+			transform : rotate(180deg);
+	-webkit-animation-name : right-spin;
+	        animation-name : right-spin;
 }
 
 .left-spin {
-	animation-name : left-spin;
-	animation-fill-mode : forwards;
-	animation-timing-function : linear;
+	-webkit-animation-name : left-spin;
+	        animation-name : left-spin;
 }
 
 @keyframes right-spin {
 	from {
-		transform : rotate(0deg);
+		-webkit-transform : rotate(180deg);
+		        transform : rotate(180deg);
 	}
 	to {
-		transform : rotate(180deg);
+		-webkit-transform : rotate(0deg);
+		        transform : rotate(0deg);
 	}
 }
 
 @keyframes left-spin {
 	from {
-		transform : rotate(180deg);
+		-webkit-transform : rotate(360deg);
+		        transform : rotate(360deg);
 	}
 	to {
-		transform : rotate(360deg);
+		-webkit-transform : rotate(0deg);
+		        transform : rotate(0deg);
 	}
 }
 
 @keyframes wrapper-show {
 	to {
-		clip : rect(auto,auto,auto,auto);
+		clip : rect(0px,300px,300px,149px);
 	}
 }

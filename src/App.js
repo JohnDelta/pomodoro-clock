@@ -7,7 +7,11 @@ class App extends React.Component {
 	render() {
 		return (
 			<div className="App">
-				<CircularProgressBar time={"10s"}/>
+				<div className="display">234:233</div>
+				<CircularProgressBar 
+					countDownTime={10} 
+					progressBarSize={1} 
+				/>
 			</div>
 		);
 	}
