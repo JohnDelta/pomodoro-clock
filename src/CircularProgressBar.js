@@ -43,6 +43,8 @@ class CircularProgressBar extends React.Component {
 	render() {
 		return (
 			<div className="CircularProgressBar" style={this.state.cssCircularProgressBar}>
+				<div className="start-gap" part="left" />
+				<div className="start-gap" part="right" />
 				<div className="circle-background" />
 				<div className="wrapper" style={this.state.cssWrapper}>
 					<div className="circle right-spin" style={this.state.cssRightSpin} />

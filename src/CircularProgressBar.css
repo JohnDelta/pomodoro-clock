@@ -13,6 +13,7 @@
 	-webkit-transform : scale(1.5);
 	    -ms-transform : scale(1.5);
 	        transform : scale(1.5);
+	background-color : inherit;
 }
 
 .wrapper {
@@ -52,6 +53,23 @@
 	border-radius: 50%;
 	position: absolute;
 	z-index : 5;
+}
+
+.start-gap {
+	position : absolute;
+	top  : -156px;
+	width : 25px;
+	height : 27px;
+	background-color : inherit;
+	z-index : 15;
+}
+
+.start-gap[part~=left] {
+	transform : skewX(20deg);
+}
+
+.start-gap[part~=right] {
+	transform : skewX(-20deg);
 }
 
 .right-spin {
