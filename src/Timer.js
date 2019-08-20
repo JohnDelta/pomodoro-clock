@@ -4,25 +4,25 @@ class Timer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			seconds : 0,
-			minutes : 0,
-			timerFlag : false
+			seconds : this.props.seconds,
+			minutes : this.props.minutes,
+			timerEnabled : false
 		};
 		this.timerIntervalID = 0;
 		this.toggleTimer = this.toggleTimer.bind(this);
 	}
 	
 	componentDidUpdate() {
-		if(this.props.timerFlag && !this.state.timerFlag) {
+		if(this.props.timerEnabled && !this.state.timerEnabled) {
 			this.setState({
-				timerFlag : true
+				timerEnabled : true
 			});
 			this.toggleTimer(true);
 		}
 		
-		if(!this.props.timerFlag && this.state.timerFlag) {
+		if(!this.props.timerEnabled && this.state.timerEnabled) {
 			this.setState({
-				timerFlag : false
+				timerEnabled : false
 			});
 			this.toggleTimer(false);
 		}
@@ -31,7 +31,19 @@ class Timer extends React.Component {
 	toggleTimer(startTimer) {
 		if(startTimer) {
 			this.timerIntervalID = setInterval(() => {
-				console.log("start");
+				let minutes = this.state.minutes;
+				let seconds = this.state.seconds - 1;
+				if(seconds < 0) {
+					seconds = 59;
+					minutes--;
+				}
+				if(minutes < 0) {
+					console.log("stop!!!");
+				}
+				this.setState({
+					minutes : minutes,
+					seconds : seconds
+				});
 			},1000);
 		} else {
 			clearInterval(this.timerIntervalID);

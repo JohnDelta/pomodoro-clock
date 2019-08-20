@@ -1,3 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+/*
+	# fonts
+	font-family: 'Orbitron', sans-serif; - time display
+	
+	# colours
+	background-dark : #212121
+	basic : #4287f5
+	basic-dark : #182f54
+*/
+
 .App {
 	width : 100vw;
 	height : 100vh;
@@ -10,14 +21,25 @@
 	-webkit-box-align : center;
 	    -ms-flex-align : center;
 	        align-items : center;
-	background-color : white;
+	background-color : #212121;
+	flex-direction : column;
 }
 
-.Timer {
-	background-color : gray;
+.timer-container {
+	background-color : inherit;
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
+.display {
+	font-family : 'Orbitron', sans-serif;
+	font-size : 2.4em;
+	color : #4287f5;
 }
 
 button {
+	margin-top : 130px;
 	z-index : 20;
 	background-color : white;
 }

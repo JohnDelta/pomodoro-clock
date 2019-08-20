@@ -20,7 +20,6 @@
 	position : absolute;
 	width : 300px;
 	height : 300px;
-	
 	-webkit-animation-name : wrapper-show;
 	        animation-name : wrapper-show;
 	-webkit-animation-fill-mode : forwards;
@@ -35,12 +34,11 @@
 .circle {
 	width: 270px;
 	height : 270px;
-	border : 14px solid green;
+	border : 14px solid #4287f5;
 	border-radius: 50%;
 	position: absolute;
 	clip : rect(0px,149px,298px,0px);
 	z-index : 10;
-	
 	-webkit-animation-timing-function : linear;
 	        animation-timing-function : linear;	
 	animation-fill-mode : forwards;
@@ -49,7 +47,7 @@
 .circle-background {
 	width: 260px;
 	height : 260px;
-	border : 25px solid gray;
+	border : 25px solid #182f54;
 	border-radius: 50%;
 	position: absolute;
 	z-index : 5;

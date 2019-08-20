@@ -7,35 +7,48 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timerFlag : false
+			timerEnabled : false,
+			minutes : 3,
+			seconds : 0,
+			progressBarEnabled : "paused"
 		};
-		this.timerFlagToggle = this.timerFlagToggle.bind(this);
+		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
 	}
 	
-	timerFlagToggle() {
-		if(this.state.timerFlag) {
+	timerEnabledToggle() {
+		if(this.state.timerEnabled) {
 			this.setState({
-				timerFlag : false
+				timerEnabled : false,
+				progressBarEnabled : "paused"
 			});
 		} else {
 			this.setState({
-				timerFlag : true
+				timerEnabled : true,
+				progressBarEnabled : "running"
 			});
 		}
 	}
 
 	render() {
+		let totalSeconds = this.state.minutes * 60;
+
 		return (
 			<div className="App">
-				<Timer 
-					timerFlag={this.state.timerFlag}
-				/>
-				<CircularProgressBar 
-					countDownTime={3} 
-					progressBarSize={0.7} 
-				/>
+				<div className="timer-container">
+					<Timer 
+						timerEnabled={this.state.timerEnabled}
+						minutes={this.state.minutes}
+						seconds={this.state.seconds}
+					/>
+					<CircularProgressBar 
+						countDownTime={totalSeconds}
+						progressBarEnabled={this.state.progressBarEnabled}
+						progressBarSize={0.7} 
+					/>
+				</div>
+				
 				<button
-					onClick={this.timerFlagToggle}
+					onClick={this.timerEnabledToggle}
 				>
 					press me!!
 				</button>
