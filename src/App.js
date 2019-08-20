@@ -15,17 +15,22 @@ class App extends React.Component {
 		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
 	}
 	
-	timerEnabledToggle() {
+	timerEnabledToggle(e) {
 		if(this.state.timerEnabled) {
 			this.setState({
 				timerEnabled : false,
 				progressBarEnabled : "paused"
 			});
+			e.target.classList.remove("fa-pause-circle");
+			e.target.classList.add("fa-play-circle");
+			
 		} else {
 			this.setState({
 				timerEnabled : true,
 				progressBarEnabled : "running"
 			});
+			e.target.classList.remove("fa-play-circle");
+			e.target.classList.add("fa-pause-circle");
 		}
 	}
 
@@ -47,11 +52,10 @@ class App extends React.Component {
 					/>
 				</div>
 				
-				<button
+				<i
 					onClick={this.timerEnabledToggle}
-				>
-					press me!!
-				</button>
+					className="button fa fa-play-circle"
+				/>
 			</div>
 		);
 	}

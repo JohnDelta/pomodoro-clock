@@ -38,12 +38,13 @@
 	color : #4287f5;
 }
 
-button {
+.button {
 	margin-top : 130px;
 	z-index : 20;
-	background-color : white;
+	color : #4287f5;
+	font-size : 3.5em;
 }
 
-button:hover {
-	background-color : red;
+.button:hover {
+	cursor : pointer;
 }
