@@ -6,10 +6,12 @@ class Timer extends React.Component {
 		this.state = {
 			seconds : this.props.seconds,
 			minutes : this.props.minutes,
-			timerEnabled : false
+			timerEnabled : false,
+			restartFlag : this.props.restartFlag
 		};
 		this.timerIntervalID = 0;
 		this.toggleTimer = this.toggleTimer.bind(this);
+		this.restartTimer = this.restartTimer.bind(this);
 	}
 	
 	componentDidUpdate() {
@@ -26,6 +28,27 @@ class Timer extends React.Component {
 			});
 			this.toggleTimer(false);
 		}
+		
+		if(!this.state.restartFlag && this.props.restartFlag) {
+			this.setState({
+				restartFlag : true
+			});
+			this.restartTimer();
+		}
+		
+		if(this.state.restartFlag && !this.props.restartFlag) {
+			this.setState({
+				restartFlag : false
+			});
+			this.restartTimer();
+		}
+	}
+	
+	restartTimer() {
+		this.setState({
+			seconds : this.props.seconds,
+			minutes : this.props.minutes
+		});
 	}
 	
 	toggleTimer(startTimer) {

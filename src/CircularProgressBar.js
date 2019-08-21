@@ -2,6 +2,43 @@ import React from 'react';
 import './CircularProgressBar.css';
 
 class CircularProgressBar extends React.Component {
+	constructor(props) {
+		super(props);
+		this.state = {
+			restartFlag : this.props.restartFlag
+		};
+		this.restartAnimation = this.restartAnimation.bind(this);
+	}
+	
+	componentDidUpdate() {
+		if(!this.state.restartFlag && this.props.restartFlag) {
+			this.setState({
+				restartFlag : true
+			});
+			this.restartAnimation();
+		}
+		
+		if(this.state.restartFlag && !this.props.restartFlag) {
+			this.setState({
+				restartFlag : false
+			});
+			this.restartAnimation();
+		}
+	}
+	
+	restartAnimation() {
+		let progressBar = document.getElementById("progressBar");
+		let oldWrapper = document.getElementById("wrapper");
+		let RightSpin = document.getElementById("right-spin");
+		let LeftSpin = document.getElementById("left-spin");
+		oldWrapper.parentElement.removeChild(oldWrapper);
+		
+		progressBar.appendChild(oldWrapper);
+		let newWrapper = document.getElementById("wrapper");
+		newWrapper.appendChild(LeftSpin);
+		newWrapper.appendChild(RightSpin);
+	}
+	
 	render() {
 		let cssLeftSpin = {
 			animationDuration : this.props.countDownTime+'s',
@@ -21,13 +58,13 @@ class CircularProgressBar extends React.Component {
 		};		
 		
 		return (
-			<div className="CircularProgressBar" style={cssCircularProgressBar}>
+			<div id="progressBar" className="CircularProgressBar" style={cssCircularProgressBar}>
 				<div className="start-gap" part="left" />
 				<div className="start-gap" part="right" />
 				<div className="circle-background" />
-				<div className="wrapper" style={cssWrapper}>
-					<div className="circle right-spin" style={cssRightSpin} />
-					<div className="circle left-spin" style={cssLeftSpin} />
+				<div id="wrapper" className="wrapper" style={cssWrapper}>
+					<div id="right-spin" className="circle right-spin" style={cssRightSpin} />
+					<div id="left-spin" className="circle left-spin" style={cssLeftSpin} />
 				</div>
 			</div>
 		);

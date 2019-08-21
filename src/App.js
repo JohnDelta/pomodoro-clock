@@ -10,9 +10,24 @@ class App extends React.Component {
 			timerEnabled : false,
 			minutes : 3,
 			seconds : 0,
-			progressBarEnabled : "paused"
+			progressBarEnabled : "paused",
+			// When restartFlag changes value, the app restarts
+			restartFlag : false
 		};
 		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
+		this.timerReset = this.timerReset.bind(this);
+	}
+	
+	timerReset() {
+		if(this.state.restartFlag) {
+			this.setState({
+				restartFlag : false
+			});
+		} else {
+			this.setState({
+				restartFlag : true
+			});
+		}
 	}
 	
 	timerEnabledToggle(e) {
@@ -21,16 +36,16 @@ class App extends React.Component {
 				timerEnabled : false,
 				progressBarEnabled : "paused"
 			});
-			e.target.classList.remove("fa-pause-circle");
-			e.target.classList.add("fa-play-circle");
+			e.target.classList.remove("fa-pause");
+			e.target.classList.add("fa-play");
 			
 		} else {
 			this.setState({
 				timerEnabled : true,
 				progressBarEnabled : "running"
 			});
-			e.target.classList.remove("fa-play-circle");
-			e.target.classList.add("fa-pause-circle");
+			e.target.classList.remove("fa-play");
+			e.target.classList.add("fa-pause");
 		}
 	}
 
@@ -44,18 +59,25 @@ class App extends React.Component {
 						timerEnabled={this.state.timerEnabled}
 						minutes={this.state.minutes}
 						seconds={this.state.seconds}
+						restartFlag={this.state.restartFlag}
 					/>
-					<CircularProgressBar 
+					<CircularProgressBar
+						restartFlag={this.state.restartFlag}
 						countDownTime={totalSeconds}
 						progressBarEnabled={this.state.progressBarEnabled}
 						progressBarSize={0.7} 
 					/>
 				</div>
-				
-				<i
-					onClick={this.timerEnabledToggle}
-					className="button fa fa-play-circle"
-				/>
+				<div className="control-container">
+					<i
+						onClick={this.timerEnabledToggle}
+						className="button fa fa-play"
+					/>
+					<i
+						onClick={this.timerReset}
+						className="button fa fa-refresh"
+					/>
+				</div>
 			</div>
 		);
 	}
