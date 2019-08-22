@@ -1,7 +1,8 @@
-@import url('https://fonts.googleapis.com/css?family=Orbitron&display=swap');
+@import url('https://fonts.googleapis.com/css?family=Orbitron|Josefin+Sans&display=swap');
 /*
 	# fonts
-	font-family: 'Orbitron', sans-serif; - time display
+	font-family: 'Orbitron', sans-serif; - time display digits
+	font-family: 'Josefin Sans', sans-serif; - else
 	
 	# colours
 	background-dark : #212121
@@ -12,31 +13,54 @@
 .App {
 	width : 100vw;
 	height : 100vh;
-	display : -webkit-box;
-	display : -ms-flexbox;
-	display : flex;
-	-webkit-box-pack : center;
-	    -ms-flex-pack : center;
-	        justify-content : center;
-	-webkit-box-align : center;
-	    -ms-flex-align : center;
-	        align-items : center;
-	background-color : #212121;
-	flex-direction : column;
-}
-
-.timer-container {
-	background-color : inherit;
-	display : flex;
+	display : grid;
+	grid-template-areas : 
+		'left-side-container timer-container right-side-container'
+		'first-bottom-container'
+		'second-bottom-container'
+	;
+	align-content : center;
+	justify-items : center;
+	align-items : start;
 	justify-content : center;
-	align-items : center;
+	grid-column-gap : 20px;
+	background-color : #212121;
+	font-family : 'Josefin Sans', sans-serif;
 }
 
-.control-container {
-	width : 30%;
-	display : flex;
-	justify-content : space-around;
-	align-items : center;
+.container-title {
+	color : #4287f5;
+	font-size : 1.5em;
+	wrap-overflow : word;
+	width : 50%;
+	min-width : 80px;
+}
+
+.side-container {
+	grid-area : session-container;
+	display : grid;
+	grid-template-columns : auto;
+	justify-items : center;
+	grid-row-gap : 5px;
+}
+
+.bottom-container {
+	grid-area : break-container;
+	display : grid;
+	grid-template-columns : auto;
+	justify-items : center;
+	grid-row-gap : 5px;
+}
+
+.control-number {
+	color : #4287f5;
+	font-family : 'Orbitron', sans-serif;
+	font-size : 1.5em;
+}
+
+.control-operator {
+	color : #4287f5;
+	font-size : 1.5em;
 }
 
 .display {
@@ -46,7 +70,6 @@
 }
 
 .button {
-	margin-top : 130px;
 	z-index : 20;
 	color : #4287f5;
 	font-size : 3.5em;

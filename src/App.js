@@ -68,7 +68,7 @@ class App extends React.Component {
 						progressBarSize={0.7} 
 					/>
 				</div>
-				<div className="control-container">
+				<div className="bottom-container">
 					<i
 						onClick={this.timerEnabledToggle}
 						className="button fa fa-play"
@@ -77,6 +77,21 @@ class App extends React.Component {
 						onClick={this.timerReset}
 						className="button fa fa-refresh"
 					/>
+				</div>
+				<div className="side-container" side="right">
+					<p className="container-title">Session Length</p>
+					<i className="fa fa-plus control-operator" />
+					<i className="control-number">34</i>
+					<i className="fa fa-minus control-operator" />
+				</div>
+				<div className="side-container" side="left">
+					<p className="container-title">Session Length</p>
+					<i className="fa fa-plus control-operator" />
+					<i className="control-number">34</i>
+					<i className="fa fa-minus control-operator" />
+				</div>
+				<div className="bottom-container">
+					<p className="container-title">Break Length</p>
 				</div>
 			</div>
 		);
