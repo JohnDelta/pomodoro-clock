@@ -8,14 +8,16 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			timerEnabled : false,
-			minutes : 3,
-			seconds : 0,
 			progressBarEnabled : "paused",
 			// When restartFlag changes value, the app restarts
-			restartFlag : false
+			restartFlag : false,
+			sessionLength : 5,
+			breakPoint : 1,
+			breakLength : 2
 		};
 		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
 		this.timerReset = this.timerReset.bind(this);
+		this.sessionLengthChange = this.sessionLengthChange.bind(this);
 	}
 	
 	timerReset() {
@@ -48,17 +50,28 @@ class App extends React.Component {
 			e.target.classList.add("fa-pause");
 		}
 	}
+	
+	sessionLengthChange(e) {
+		if(e.target.name === "+") {
+			this.setState({
+				sessionLength : this.state.sessionLength + 1
+			});
+		} else if (e.target.name === "-") {
+			this.setState({
+				sessionLength : this.state.sessionLength - 1
+			});
+		}
+	}
 
 	render() {
-		let totalSeconds = this.state.minutes * 60;
+		let totalSeconds = this.state.sessionLength * 60;
 
 		return (
 			<div className="App">
 				<div className="timer-container">
 					<Timer 
 						timerEnabled={this.state.timerEnabled}
-						minutes={this.state.minutes}
-						seconds={this.state.seconds}
+						minutes={this.state.sessionLength}
 						restartFlag={this.state.restartFlag}
 					/>
 					<CircularProgressBar
@@ -68,30 +81,55 @@ class App extends React.Component {
 						progressBarSize={0.7} 
 					/>
 				</div>
-				<div className="bottom-container">
+				
+				<fieldset className="control-container" side="left">
+					<legend>
+						<p className="container-title">Session Length</p>
+					</legend>
+					<div className="content">
+						<i className="button fa fa-plus control-operator"
+							onClick={this.sessionLengthChange}
+							name="+"
+						/>
+						<div className="control-number">{this.state.sessionLength}</div>
+						<i className="button fa fa-minus control-operator" 
+							onClick={this.sessionLengthChange}
+							name="-"
+						/>
+					</div>
+				</fieldset>
+				
+				<fieldset className="control-container" side="right">
+					<legend>
+						<p className="container-title">Break Point</p>
+					</legend>
+					<div className="content">
+						<i className="button fa fa-plus control-operator" />
+						<div className="control-number">{this.state.breakPoint}</div>
+						<i className="button fa fa-minus control-operator" />
+					</div>
+				</fieldset>
+				
+				<fieldset className="control-container" side="bottom-first">
+					<legend>
+						<p className="container-title">Break Length</p>
+					</legend>
+					<div className="content">
+						<i className="button fa fa-plus control-operator" />
+						<div className="control-number">{this.state.breakLength}</div>
+						<i className="button fa fa-minus control-operator" />
+					</div>
+				</fieldset>
+				
+				<div className="control-container" side="bottom-second">
 					<i
 						onClick={this.timerEnabledToggle}
-						className="button fa fa-play"
+						className="button button-control fa fa-play"
 					/>
 					<i
 						onClick={this.timerReset}
-						className="button fa fa-refresh"
+						className="button button-control fa fa-refresh"
 					/>
-				</div>
-				<div className="side-container" side="right">
-					<p className="container-title">Session Length</p>
-					<i className="fa fa-plus control-operator" />
-					<i className="control-number">34</i>
-					<i className="fa fa-minus control-operator" />
-				</div>
-				<div className="side-container" side="left">
-					<p className="container-title">Session Length</p>
-					<i className="fa fa-plus control-operator" />
-					<i className="control-number">34</i>
-					<i className="fa fa-minus control-operator" />
-				</div>
-				<div className="bottom-container">
-					<p className="container-title">Break Length</p>
 				</div>
 			</div>
 		);

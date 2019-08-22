@@ -4,7 +4,7 @@ class Timer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			seconds : this.props.seconds,
+			seconds : 0,
 			minutes : this.props.minutes,
 			timerEnabled : false,
 			restartFlag : this.props.restartFlag
@@ -46,7 +46,7 @@ class Timer extends React.Component {
 	
 	restartTimer() {
 		this.setState({
-			seconds : this.props.seconds,
+			seconds : 0,
 			minutes : this.props.minutes
 		});
 	}
