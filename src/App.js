@@ -18,6 +18,8 @@ class App extends React.Component {
 		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
 		this.timerReset = this.timerReset.bind(this);
 		this.sessionLengthChange = this.sessionLengthChange.bind(this);
+		this.breakPointChange = this.breakPointChange.bind(this);
+		this.breakLengthChange = this.breakLengthChange.bind(this);
 	}
 	
 	timerReset() {
@@ -51,14 +53,38 @@ class App extends React.Component {
 		}
 	}
 	
-	sessionLengthChange(e) {
-		if(e.target.name === "+") {
+	sessionLengthChange(e) {/*
+		if(e.target.value === "+" && this.state.sessionLength < 59) {
 			this.setState({
 				sessionLength : this.state.sessionLength + 1
 			});
-		} else if (e.target.name === "-") {
+		} else if (e.target.value === "-" && this.state.sessionLength > 0) {
 			this.setState({
 				sessionLength : this.state.sessionLength - 1
+			});
+		}*/console.log(e.target.value);
+	}
+	
+	breakPointChange(e) {
+		if(e.target.value === "+" && this.state.breakPoint < this.state.sessionLength) {
+			this.setState({
+				breakPoint : this.state.breakPoint + 1
+			});
+		} else if (e.target.value === "-" && this.state.breakPoint > 1) {
+			this.setState({
+				breakPoint : this.state.breakPoint - 1
+			});
+		}
+	}
+	
+	breakLengthChange(e) {
+		if(e.target.value === "+" && this.state.breakLength < 59) {
+			this.setState({
+				breakLength : this.state.breakLength + 1
+			});
+		} else if (e.target.value === "-" && this.state.breakLength > 1) {
+			this.setState({
+				breakLength : this.state.breakLength - 1
 			});
 		}
 	}
@@ -89,12 +115,12 @@ class App extends React.Component {
 					<div className="content">
 						<i className="button fa fa-plus control-operator"
 							onClick={this.sessionLengthChange}
-							name="+"
+							value="+"
 						/>
 						<div className="control-number">{this.state.sessionLength}</div>
 						<i className="button fa fa-minus control-operator" 
 							onClick={this.sessionLengthChange}
-							name="-"
+							value="-"
 						/>
 					</div>
 				</fieldset>
@@ -104,9 +130,15 @@ class App extends React.Component {
 						<p className="container-title">Break Point</p>
 					</legend>
 					<div className="content">
-						<i className="button fa fa-plus control-operator" />
+						<i className="button fa fa-plus control-operator" 
+							onClick={this.breakPointChange}
+							value="+"
+						/>
 						<div className="control-number">{this.state.breakPoint}</div>
-						<i className="button fa fa-minus control-operator" />
+						<i className="button fa fa-minus control-operator" 
+							onClick={this.breakPointChange}
+							value="-"
+						/>
 					</div>
 				</fieldset>
 				
@@ -115,9 +147,15 @@ class App extends React.Component {
 						<p className="container-title">Break Length</p>
 					</legend>
 					<div className="content">
-						<i className="button fa fa-plus control-operator" />
+						<i className="button fa fa-plus control-operator" 
+							onClick={this.breakLengthChange}
+							value="+"
+						/>
 						<div className="control-number">{this.state.breakLength}</div>
-						<i className="button fa fa-minus control-operator" />
+						<i className="button fa fa-minus control-operator" 
+							onClick={this.breakLengthChange}
+							value="-" 
+						/>
 					</div>
 				</fieldset>
 				

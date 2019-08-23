@@ -49,7 +49,7 @@
 .control-container {
 	border : 3px solid #182f54;
 	border-radius : 10px;
-	width : 70px;
+	width : 80px;
 }
 
 .content {
@@ -141,10 +141,22 @@
 	transition-duration : 0.2s;
 }
 
+.button:active {
+	transition-duration : 0.2s;
+	transform : scale(0.9);
+	color : #91d5ff;
+}
+
 .button:hover {
 	cursor : pointer;
-	color : #91d5ff;
-	transition-duration : 0.2s;
+}
+
+@media screen only and (min-width : 768px) {
+	.button:hover {
+		cursor : pointer;
+		color : #91d5ff;
+		transition-duration : 0.2s;
+	}
 }
 
 .button-control {
