@@ -54,50 +54,93 @@ class App extends React.Component {
 	}
 	
 	sessionLengthChange(e) {
-		if(e.target.value === "+" && this.state.sessionLength < 59) {
-			this.setState({
-				sessionLength : this.state.sessionLength + 1
-			});
-		} else if (e.target.value === "-" && this.state.sessionLength > 0) {
-			this.setState({
-				sessionLength : this.state.sessionLength - 1
-			});
+		if(e.target.value === "+") {
+			if(this.state.sessionLength < 59) {
+				this.setState({
+					sessionLength : this.state.sessionLength + 1
+				});
+			} else {
+				this.setState({
+					sessionLength : 0
+				});
+			}
+		} else if (e.target.value === "-") {
+			if(this.state.sessionLength > 1) {
+				this.setState({
+					sessionLength : this.state.sessionLength - 1
+				});
+			} else {
+				this.setState({
+					sessionLength : 59
+				});
+			}
 		}
 	}
 	
 	breakPointChange(e) {
-		if(e.target.value === "+" && this.state.breakPoint < this.state.sessionLength) {
-			this.setState({
-				breakPoint : this.state.breakPoint + 1
-			});
-		} else if (e.target.value === "-" && this.state.breakPoint > 1) {
-			this.setState({
-				breakPoint : this.state.breakPoint - 1
-			});
+		if(e.target.value === "+") {
+			if(this.state.breakPoint < this.state.sessionLength) {
+				this.setState({
+					breakPoint : this.state.breakPoint + 1
+				});
+			} else {
+				this.setState({
+					breakPoint : 1
+				});
+			}
+		} else if (e.target.value === "-") {
+			if(this.state.breakPoint > 1) {
+				this.setState({
+					breakPoint : this.state.breakPoint - 1
+				});
+			} else {
+				this.setState({
+					breakPoint : this.state.sessionLength
+				});
+			}
 		}
 	}
 	
 	breakLengthChange(e) {
-		if(e.target.value === "+" && this.state.breakLength < 59) {
-			this.setState({
-				breakLength : this.state.breakLength + 1
-			});
-		} else if (e.target.value === "-" && this.state.breakLength > 1) {
-			this.setState({
-				breakLength : this.state.breakLength - 1
-			});
+		if(e.target.value === "+") {
+			if(this.state.breakLength < 59) {
+				this.setState({
+					breakLength : this.state.breakLength + 1
+				});
+			} else {
+				this.setState({
+					breakLength : 1
+				});
+			}
+		} else if (e.target.value === "-") {
+			if(this.state.breakLength > 1) {
+				this.setState({
+					breakLength : this.state.breakLength - 1
+				});
+			} else {
+				this.setState({
+					breakLength : 59
+				});
+			}
 		}
 	}
 
 	render() {
 		let totalSeconds = this.state.sessionLength * 60;
+		let style = {};
+		if(this.state.timerEnabled) {
+			style = {
+				pointerEvents : "none",
+				color : "#182f54"
+			};
+		}
 
 		return (
 			<div className="App">
 				<div className="timer-container">
 					<Timer 
 						timerEnabled={this.state.timerEnabled}
-						minutes={this.state.sessionLength}
+						sessionLength={this.state.sessionLength}
 						restartFlag={this.state.restartFlag}
 					/>
 					<CircularProgressBar
@@ -116,11 +159,13 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator"
 							onClick={this.sessionLengthChange}
 							value="+"
+							style={style}
 						/>
 						<div className="control-number">{this.state.sessionLength}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.sessionLengthChange}
 							value="-"
+							style={style}
 						/>
 					</div>
 				</fieldset>
@@ -133,11 +178,13 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakPointChange}
 							value="+"
+							style={style}
 						/>
 						<div className="control-number">{this.state.breakPoint}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakPointChange}
 							value="-"
+							style={style}
 						/>
 					</div>
 				</fieldset>
@@ -150,11 +197,13 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakLengthChange}
 							value="+"
+							style={style}
 						/>
 						<div className="control-number">{this.state.breakLength}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakLengthChange}
 							value="-" 
+							style={style}
 						/>
 					</div>
 				</fieldset>

@@ -5,7 +5,8 @@ class Timer extends React.Component {
 		super(props);
 		this.state = {
 			seconds : 0,
-			minutes : this.props.minutes,
+			minutes : this.props.sessionLength,
+			sessionLength : this.props.sessionLength,
 			timerEnabled : this.props.timerEnabled,
 			restartFlag : this.props.restartFlag
 		};
@@ -43,9 +44,11 @@ class Timer extends React.Component {
 			this.restartTimer();
 		}
 		
-		if(!this.state.timerEnabled && this.props.minutes !== this.state.minutes) {
+		if(!this.state.timerEnabled && this.props.sessionLength !== this.state.sessionLength) {
 			this.setState({
-				minutes : this.props.minutes
+				sessionLength : this.props.sessionLength,
+				minutes : this.props.sessionLength,
+				seconds : 0
 			});
 		}
 	}
@@ -53,7 +56,7 @@ class Timer extends React.Component {
 	restartTimer() {
 		this.setState({
 			seconds : 0,
-			minutes : this.props.minutes
+			minutes : this.props.sessionLength
 		});
 	}
 	
