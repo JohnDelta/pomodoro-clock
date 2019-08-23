@@ -139,6 +139,9 @@
 	z-index : 20;
 	color : #4287f5;
 	transition-duration : 0.2s;
+	border : none;
+	background-color : inherit;
+	outline : none;
 }
 
 .button:active {

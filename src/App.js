@@ -53,7 +53,7 @@ class App extends React.Component {
 		}
 	}
 	
-	sessionLengthChange(e) {/*
+	sessionLengthChange(e) {
 		if(e.target.value === "+" && this.state.sessionLength < 59) {
 			this.setState({
 				sessionLength : this.state.sessionLength + 1
@@ -62,7 +62,7 @@ class App extends React.Component {
 			this.setState({
 				sessionLength : this.state.sessionLength - 1
 			});
-		}*/console.log(e.target.value);
+		}
 	}
 	
 	breakPointChange(e) {
@@ -113,12 +113,12 @@ class App extends React.Component {
 						<p className="container-title">Session Length</p>
 					</legend>
 					<div className="content">
-						<i className="button fa fa-plus control-operator"
+						<button className="button fa fa-plus control-operator"
 							onClick={this.sessionLengthChange}
 							value="+"
 						/>
 						<div className="control-number">{this.state.sessionLength}</div>
-						<i className="button fa fa-minus control-operator" 
+						<button className="button fa fa-minus control-operator" 
 							onClick={this.sessionLengthChange}
 							value="-"
 						/>
@@ -130,12 +130,12 @@ class App extends React.Component {
 						<p className="container-title">Break Point</p>
 					</legend>
 					<div className="content">
-						<i className="button fa fa-plus control-operator" 
+						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakPointChange}
 							value="+"
 						/>
 						<div className="control-number">{this.state.breakPoint}</div>
-						<i className="button fa fa-minus control-operator" 
+						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakPointChange}
 							value="-"
 						/>
@@ -147,12 +147,12 @@ class App extends React.Component {
 						<p className="container-title">Break Length</p>
 					</legend>
 					<div className="content">
-						<i className="button fa fa-plus control-operator" 
+						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakLengthChange}
 							value="+"
 						/>
 						<div className="control-number">{this.state.breakLength}</div>
-						<i className="button fa fa-minus control-operator" 
+						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakLengthChange}
 							value="-" 
 						/>
