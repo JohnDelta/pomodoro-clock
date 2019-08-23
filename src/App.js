@@ -61,7 +61,7 @@ class App extends React.Component {
 				});
 			} else {
 				this.setState({
-					sessionLength : 0
+					sessionLength : 1
 				});
 			}
 		} else if (e.target.value === "-") {
@@ -142,6 +142,7 @@ class App extends React.Component {
 						timerEnabled={this.state.timerEnabled}
 						sessionLength={this.state.sessionLength}
 						restartFlag={this.state.restartFlag}
+						breakPoint={this.state.breakPoint}
 					/>
 					<CircularProgressBar
 						restartFlag={this.state.restartFlag}

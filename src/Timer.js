@@ -8,7 +8,9 @@ class Timer extends React.Component {
 			minutes : this.props.sessionLength,
 			sessionLength : this.props.sessionLength,
 			timerEnabled : this.props.timerEnabled,
-			restartFlag : this.props.restartFlag
+			restartFlag : this.props.restartFlag,
+			breakPoint : this.props.breakPoint,
+			minutesToBreakPoint : this.props.breakPoint
 		};
 		this.timerIntervalID = 0;
 		this.toggleTimer = this.toggleTimer.bind(this);
@@ -16,18 +18,11 @@ class Timer extends React.Component {
 	}
 	
 	componentDidUpdate() {
-		if(this.props.timerEnabled && !this.state.timerEnabled) {
+		if(this.props.timerEnabled !== this.state.timerEnabled) {
 			this.setState({
-				timerEnabled : true
+				timerEnabled : this.props.timerEnabled
 			});
-			this.toggleTimer(true);
-		}
-		
-		if(!this.props.timerEnabled && this.state.timerEnabled) {
-			this.setState({
-				timerEnabled : false
-			});
-			this.toggleTimer(false);
+			this.toggleTimer(this.props.timerEnabled);
 		}
 		
 		if(!this.state.restartFlag && this.props.restartFlag) {
@@ -44,9 +39,12 @@ class Timer extends React.Component {
 			this.restartTimer();
 		}
 		
-		if(!this.state.timerEnabled && this.props.sessionLength !== this.state.sessionLength) {
+		if(!this.state.timerEnabled && (this.props.sessionLength !== this.state.sessionLength
+			|| this.props.breakPoint !== this.state.breakPoint)) {
 			this.setState({
 				sessionLength : this.props.sessionLength,
+				breakPoint : this.props.breakPoint,
+				minutesToBreakPoint : this.props.breakPoint,
 				minutes : this.props.sessionLength,
 				seconds : 0
 			});
@@ -56,25 +54,37 @@ class Timer extends React.Component {
 	restartTimer() {
 		this.setState({
 			seconds : 0,
-			minutes : this.props.sessionLength
+			minutes : this.props.sessionLength,
+			minutesToBreakPoint : this.props.breakPoint
 		});
 	}
 	
 	toggleTimer(startTimer) {
 		if(startTimer) {
 			this.timerIntervalID = setInterval(() => {
+				let minutesToBreakPoint = this.state.minutesToBreakPoint;
 				let minutes = this.state.minutes;
 				let seconds = this.state.seconds - 1;
 				if(seconds < 0) {
 					seconds = 59;
 					minutes--;
 				}
+				if(seconds === 0) {
+					if(minutes !== this.state.sessionLength) {//don't break from the starting point
+						minutesToBreakPoint--;
+					}
+				}
 				if(minutes < 0) {
 					console.log("stop!!!");
 				}
+				if(minutesToBreakPoint <= 0) {
+					console.log("breaaaakk!!!!");
+					minutesToBreakPoint = this.state.breakPoint;
+				}
 				this.setState({
 					minutes : minutes,
-					seconds : seconds
+					seconds : seconds,
+					minutesToBreakPoint : minutesToBreakPoint
 				});
 			},1000);
 		} else {
