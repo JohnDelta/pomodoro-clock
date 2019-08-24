@@ -25,29 +25,16 @@ class Timer extends React.Component {
 			this.toggleTimer(this.props.timerEnabled);
 		}
 		
-		if(!this.state.restartFlag && this.props.restartFlag) {
+		if(this.state.restartFlag !== this.props.restartFlag) {
 			this.setState({
-				restartFlag : true
-			});
-			this.restartTimer();
-		}
-		
-		if(this.state.restartFlag && !this.props.restartFlag) {
-			this.setState({
-				restartFlag : false
+				restartFlag : this.props.restartFlag
 			});
 			this.restartTimer();
 		}
 		
 		if(!this.state.timerEnabled && (this.props.sessionLength !== this.state.sessionLength
 			|| this.props.breakPoint !== this.state.breakPoint)) {
-			this.setState({
-				sessionLength : this.props.sessionLength,
-				breakPoint : this.props.breakPoint,
-				minutesToBreakPoint : this.props.breakPoint,
-				minutes : this.props.sessionLength,
-				seconds : 0
-			});
+			this.props.timerReset();
 		}
 	}
 	
@@ -55,7 +42,9 @@ class Timer extends React.Component {
 		this.setState({
 			seconds : 0,
 			minutes : this.props.sessionLength,
-			minutesToBreakPoint : this.props.breakPoint
+			minutesToBreakPoint : this.props.breakPoint,
+			sessionLength : this.props.sessionLength,
+			breakPoint : this.props.breakPoint
 		});
 	}
 	

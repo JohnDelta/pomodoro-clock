@@ -138,7 +138,8 @@ class App extends React.Component {
 		return (
 			<div className="App">
 				<div className="timer-container">
-					<Timer 
+					<Timer
+						timerReset={this.timerReset}
 						timerEnabled={this.state.timerEnabled}
 						sessionLength={this.state.sessionLength}
 						restartFlag={this.state.restartFlag}
