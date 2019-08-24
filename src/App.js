@@ -7,7 +7,7 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timerEnabled : false,
+			timerPaused : true,
 			sessionProgressBarEnabled : "paused",
 			breakProgressBarEnabled : "paused",
 			// When restartFlag changes value, the app restarts
@@ -16,11 +16,12 @@ class App extends React.Component {
 			breakPoint : 1,
 			breakLength : 2
 		};
-		this.timerEnabledToggle = this.timerEnabledToggle.bind(this);
+		this.timerPausedToggle = this.timerPausedToggle.bind(this);
 		this.timerReset = this.timerReset.bind(this);
 		this.sessionLengthChange = this.sessionLengthChange.bind(this);
 		this.breakPointChange = this.breakPointChange.bind(this);
 		this.breakLengthChange = this.breakLengthChange.bind(this);
+		//this.enableBreakTimer = this.breakTimer.bind(this);
 	}
 	
 	timerReset() {
@@ -35,10 +36,10 @@ class App extends React.Component {
 		}
 	}
 	
-	timerEnabledToggle(e) {
-		if(this.state.timerEnabled) {
+	timerPausedToggle(e) {
+		if(!this.state.timerPaused) {
 			this.setState({
-				timerEnabled : false,
+				timerPaused : true,
 				sessionProgressBarEnabled : "paused",
 				breakProgressBarEnabled : "paused"
 			});
@@ -47,7 +48,7 @@ class App extends React.Component {
 			
 		} else {
 			this.setState({
-				timerEnabled : true,
+				timerPaused : false,
 				sessionProgressBarEnabled : "running",
 				breakProgressBarEnabled : "running"
 			});
@@ -55,6 +56,10 @@ class App extends React.Component {
 			e.target.classList.add("fa-pause");
 		}
 	}
+	
+	/*enableBreakTimer() {
+		
+	}*/
 	
 	sessionLengthChange(e) {
 		if(e.target.value === "+") {
@@ -131,7 +136,7 @@ class App extends React.Component {
 	render() {
 		let totalSeconds = this.state.sessionLength * 60;
 		let style = {};
-		if(this.state.timerEnabled) {
+		if(this.state.timerPaused) {
 			style = {
 				pointerEvents : "none",
 				color : "#182f54"
@@ -143,10 +148,11 @@ class App extends React.Component {
 				<div className="timer-container">
 					<Timer
 						timerReset={this.timerReset}
-						timerEnabled={this.state.timerEnabled}
+						timerPaused={this.state.timerPaused}
 						sessionLength={this.state.sessionLength}
 						restartFlag={this.state.restartFlag}
 						breakPoint={this.state.breakPoint}
+						breakLength={this.state.breakLength}
 					/>
 					
 					<CircularProgressBar
@@ -227,7 +233,7 @@ class App extends React.Component {
 				
 				<div className="control-container" side="bottom-second">
 					<i
-						onClick={this.timerEnabledToggle}
+						onClick={this.timerPausedToggle}
 						className="button button-control fa fa-play"
 					/>
 					<i
