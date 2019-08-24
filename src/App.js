@@ -8,7 +8,8 @@ class App extends React.Component {
 		super(props);
 		this.state = {
 			timerEnabled : false,
-			progressBarEnabled : "paused",
+			sessionProgressBarEnabled : "paused",
+			breakProgressBarEnabled : "paused",
 			// When restartFlag changes value, the app restarts
 			restartFlag : false,
 			sessionLength : 5,
@@ -38,7 +39,8 @@ class App extends React.Component {
 		if(this.state.timerEnabled) {
 			this.setState({
 				timerEnabled : false,
-				progressBarEnabled : "paused"
+				sessionProgressBarEnabled : "paused",
+				breakProgressBarEnabled : "paused"
 			});
 			e.target.classList.remove("fa-pause");
 			e.target.classList.add("fa-play");
@@ -46,7 +48,8 @@ class App extends React.Component {
 		} else {
 			this.setState({
 				timerEnabled : true,
-				progressBarEnabled : "running"
+				sessionProgressBarEnabled : "running",
+				breakProgressBarEnabled : "running"
 			});
 			e.target.classList.remove("fa-play");
 			e.target.classList.add("fa-pause");
@@ -145,11 +148,23 @@ class App extends React.Component {
 						restartFlag={this.state.restartFlag}
 						breakPoint={this.state.breakPoint}
 					/>
+					
 					<CircularProgressBar
+						id={"sessionProgressBar"}
 						restartFlag={this.state.restartFlag}
 						countDownTime={totalSeconds}
-						progressBarEnabled={this.state.progressBarEnabled}
-						progressBarSize={0.7} 
+						progressBarEnabled={this.state.sessionProgressBarEnabled}
+						progressBarSize={0.7}
+						progressBarColor={"#4287f5"}
+					/>
+					
+					<CircularProgressBar
+						id={"breakProgressBar"}
+						restartFlag={this.state.restartFlag}
+						countDownTime={totalSeconds}
+						progressBarEnabled={this.state.breakProgressBarEnabled}
+						progressBarSize={0.9}
+						progressBarColor={"#4ffff5"}
 					/>
 				</div>
 				

@@ -42,12 +42,14 @@ class CircularProgressBar extends React.Component {
 	render() {
 		let cssLeftSpin = {
 			animationDuration : this.props.countDownTime+'s',
-			animationPlayState : this.props.progressBarEnabled
+			animationPlayState : this.props.progressBarEnabled,
+			borderColor : this.props.progressBarColor
 		};
 		let cssRightSpin = {
 			animationDuration : this.props.countDownTime/2+'s',
 			animationDelay : this.props.countDownTime/2+'s',
-			animationPlayState : this.props.progressBarEnabled
+			animationPlayState : this.props.progressBarEnabled,
+			borderColor : this.props.progressBarColor
 		};
 		let cssWrapper = {
 			animationDelay : this.props.countDownTime/2+'s',
@@ -58,13 +60,13 @@ class CircularProgressBar extends React.Component {
 		};		
 		
 		return (
-			<div id="progressBar" className="CircularProgressBar" style={cssCircularProgressBar}>
+			<div id={this.props.id+"progressBar"} className="CircularProgressBar" style={cssCircularProgressBar} >
 				<div className="start-gap" part="left" />
 				<div className="start-gap" part="right" />
 				<div className="circle-background" />
-				<div id="wrapper" className="wrapper" style={cssWrapper}>
-					<div id="right-spin" className="circle right-spin" style={cssRightSpin} />
-					<div id="left-spin" className="circle left-spin" style={cssLeftSpin} />
+				<div id={this.props.id+"wrapper"} className="wrapper" style={cssWrapper}>
+					<div id={this.props.id+"right-spin"} className="circle right-spin" style={cssRightSpin} />
+					<div id={this.props.id+"left-spin"} className="circle left-spin" style={cssLeftSpin} />
 				</div>
 			</div>
 		);
