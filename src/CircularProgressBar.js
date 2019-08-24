@@ -11,16 +11,9 @@ class CircularProgressBar extends React.Component {
 	}
 	
 	componentDidUpdate() {
-		if(!this.state.restartFlag && this.props.restartFlag) {
+		if(this.state.restartFlag !== this.props.restartFlag) {
 			this.setState({
-				restartFlag : true
-			});
-			this.restartAnimation();
-		}
-		
-		if(this.state.restartFlag && !this.props.restartFlag) {
-			this.setState({
-				restartFlag : false
+				restartFlag : this.props.restartFlag
 			});
 			this.restartAnimation();
 		}
