@@ -27,14 +27,14 @@ class CircularProgressBar extends React.Component {
 	}
 	
 	restartAnimation() {
-		let progressBar = document.getElementById("progressBar");
-		let oldWrapper = document.getElementById("wrapper");
-		let RightSpin = document.getElementById("right-spin");
-		let LeftSpin = document.getElementById("left-spin");
+		let progressBar = document.getElementById(this.props.id+"progressBar");
+		let oldWrapper = document.getElementById(this.props.id+"wrapper");
+		let RightSpin = document.getElementById(this.props.id+"right-spin");
+		let LeftSpin = document.getElementById(this.props.id+"left-spin");
 		oldWrapper.parentElement.removeChild(oldWrapper);
 		
 		progressBar.appendChild(oldWrapper);
-		let newWrapper = document.getElementById("wrapper");
+		let newWrapper = document.getElementById(this.props.id+"wrapper");
 		newWrapper.appendChild(LeftSpin);
 		newWrapper.appendChild(RightSpin);
 	}
