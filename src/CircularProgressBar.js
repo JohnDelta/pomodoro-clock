@@ -33,20 +33,27 @@ class CircularProgressBar extends React.Component {
 	}
 	
 	render() {
+		let animationState = "";
+		if(this.props.id === this.props.sessionTimerId) {
+			animationState = this.props.sessionTimerState;
+		} else if(this.props.id === this.props.breakTimerId) {
+			animationState = this.props.breakTimerState;
+		}
+		
 		let cssLeftSpin = {
 			animationDuration : this.props.countDownTime+'s',
-			animationPlayState : this.props.progressBarEnabled,
+			animationPlayState : animationState,
 			borderColor : this.props.progressBarColor
 		};
 		let cssRightSpin = {
 			animationDuration : this.props.countDownTime/2+'s',
 			animationDelay : this.props.countDownTime/2+'s',
-			animationPlayState : this.props.progressBarEnabled,
+			animationPlayState : animationState,
 			borderColor : this.props.progressBarColor
 		};
 		let cssWrapper = {
 			animationDelay : this.props.countDownTime/2+'s',
-			animationPlayState : this.props.progressBarEnabled
+			animationPlayState : animationState
 		};
 		let cssCircularProgressBar = {
 			transform : 'scale('+this.props.progressBarSize+')'

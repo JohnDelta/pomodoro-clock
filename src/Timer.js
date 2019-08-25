@@ -4,135 +4,131 @@ class Timer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			seconds : 0,
-			minutes : this.props.sessionLength,
+			sessionLength : this.props.sessionLength,
+			sessionMinutes : this.props.sessionLength,
+			sessionSeconds : 0,
+			
+			breakLength : this.props.breakLength,
 			breakMinutes : this.props.breakLength,
 			breakSeconds : 0,
-			sessionLength : this.props.sessionLength,
-			breakLength : this.props.breakLength,
-			timerPaused : this.props.timerPaused,
-			timerEnabled : true,
-			restartFlag : this.props.restartFlag,
+			
 			breakPoint : this.props.breakPoint,
-			minutesToBreakPoint : this.props.breakPoint
+			minutesToBreakPoint : this.props.breakPoint,
+			
+			sessionTimerState : this.props.sessionTimerState,
+			breakTimerState : this.props.breakTimerState,
+			
+			restartFlag : this.props.restartFlag
 		};
+		
 		this.timerIntervalID = 0;
 		this.breakTimerIntervalID = 0;
-		this.toggleTimer = this.toggleTimer.bind(this);
-		this.restartTimer = this.restartTimer.bind(this);
-		this.toggleBreakTimer = this.toggleBreakTimer.bind(this);
+		
+		this.updateSessionTimer = this.updateSessionTimer.bind(this);
+		this.updateBreakTimer = this.updateBreakTimer.bind(this);
+		
+		this.reset = this.reset.bind(this);
 	}
 	
 	componentDidUpdate() {
-		if(this.props.timerPaused !== this.state.timerPaused) {
+		if(this.props.sessionTimerState !== this.state.sessionTimerState) {
 			this.setState({
-				timerPaused : this.props.timerPaused
+				sessionTimerState : this.props.sessionTimerState
 			});
-			this.toggleTimer(this.props.timerPaused);
+			this.updateSessionTimer(this.props.sessionTimerState);
 		}
 		
-		if(this.state.restartFlag !== this.props.restartFlag) {
+		if(this.props.breakTimerState !== this.state.breakTimerState) {
+			this.setState({
+				breakTimerState : this.props.breakTimerState
+			});
+			this.updateBreakTimer(this.props.breakTimerState);
+		}
+		
+		if(this.props.restartFlag !== this.state.restartFlag) {
 			this.setState({
 				restartFlag : this.props.restartFlag
 			});
-			this.restartTimer();
-		}
-		
-		if(this.state.timerPaused && (this.props.sessionLength !== this.state.sessionLength
-			|| this.props.breakPoint !== this.state.breakPoint || this.props.breakLength !== this.state.breakLength)) {
-			this.props.timerReset();
+			this.reset();
 		}
 	}
 	
-	restartTimer() {
-		this.setState({
-			seconds : 0,
-			minutes : this.props.sessionLength,
-			minutesToBreakPoint : this.props.breakPoint,
-			sessionLength : this.props.sessionLength,
-			breakLength : this.props.breakLength,
-			breakPoint : this.props.breakPoint,
-			breakMinutes : this.props.breakLength,
-			breakSeconds : 0,
-		});
-	}
-	
-	toggleTimer(timerPaused) {
-		if(!timerPaused && this.state.timerEnabled) {
+	updateSessionTimer(sessionTimerState) {
+		if(sessionTimerState === "running") {
 			this.timerIntervalID = setInterval(() => {
 				let minutesToBreakPoint = this.state.minutesToBreakPoint;
-				let minutes = this.state.minutes;
-				let seconds = this.state.seconds - 1;
+				let minutes = this.state.sessionMinutes;
+				let seconds = this.state.sessionSeconds - 1;
+				
 				if(seconds < 0) {
 					seconds = 59;
 					minutes--;
 				}
+				
 				if(seconds === 0) {
 					if(minutes !== this.state.sessionLength) {//don't break from the starting point
 						minutesToBreakPoint--;
 					}
 				}
+				
 				if(minutes < 0) {
 					console.log("stop!!!");
 				}
+				
 				if(minutesToBreakPoint <= 0) {
-					this.toggleBreakTimer();
+					this.props.updateTimerState(this.props.breakTimerId, "running");
 				}
+				
 				this.setState({
-					minutes : minutes,
-					seconds : seconds,
+					sessionMinutes : minutes,
+					sessionSeconds : seconds,
 					minutesToBreakPoint : minutesToBreakPoint
 				});
 			},1000);
-		} else {
+		} else if(sessionTimerState === "paused") {
 			clearInterval(this.timerIntervalID);
+		} else {
+			console.log("Unknown argument given in updateSessionTimer function.");
 		}
 	}
 	
-	toggleBreakTimer() {
-		clearInterval(this.timerIntervalID);
+	updateBreakTimer(breakTimerState) {
+		this.props.updateTimerState(this.props.sessionTimerId, "paused");
+		
+		if(breakTimerState === "running") {
+			console.log("I'm running!");
+		} else if (breakTimerState === "paused") {
+			console.log("I'm paused.");
+		} else {
+			console.log("Unknown argument given in updateBreakTimer function.");
+		}
+	}
+	
+	reset() {
 		this.setState({
-			timerEnabled : false
+			sessionLength : this.props.sessionLength,
+			sessionSeconds : 0,
+			sessionMinutes : this.props.sessionLength,
+			
+			breakLength : this.props.breakLength,
+			breakMinutes : this.props.breakLength,
+			breakSeconds : 0,
+			
+			minutesToBreakPoint : this.props.breakPoint,
+			breakPoint : this.props.breakPoint
 		});
 		
-		if(!this.state.timerPaused) {
-			this.breakTimerIntervalID = setInterval(() => {
-				let minutes = this.state.breakMinutes;
-				let seconds = this.state.breakSeconds;console.log(seconds);
-				seconds--;
-				if(seconds < 0) {
-					minutes--;
-					seconds = 59;
-				}
-				if(minutes < 0) {
-					clearInterval(this.breakTimerIntervalID);
-					this.setState({
-						timerEnabled : true,
-						breakLength : this.props.breakLength
-					});
-					this.toggleTimer();
-				}
-				this.setState({
-					breakMinutes : minutes,
-					breakSeconds : seconds
-				});
-			},1000);
-		} else {
-			this.setState({
-				timerEnabled : true
-			});
-			clearInterval(this.breakTimerIntervalID);
-			this.toggleTimer(this.state.timerPaused);
-		}
+		this.props.updateTimerState(this.props.sessionTimerId, "paused");
+		this.props.updateTimerState(this.props.breakTimerId, "paused");
 	}
 
 	render() {	
 		let time = "";
-		if(this.state.minutes < 10) time = "0" + this.state.minutes;
-		else time = this.state.minutes;
+		if(this.state.sessionMinutes < 10) time = "0" + this.state.sessionMinutes;
+		else time = this.state.sessionMinutes;
 		time += ":";
-		if(this.state.seconds < 10) time += "0" + this.state.seconds;
-		else time += this.state.seconds;
+		if(this.state.sessionSeconds < 10) time += "0" + this.state.sessionSeconds;
+		else time += this.state.sessionSeconds;
 		
 		return (
 			<div className="Timer">

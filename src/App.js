@@ -7,24 +7,92 @@ class App extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			timerPaused : true,
-			sessionProgressBarEnabled : "paused",
-			breakProgressBarEnabled : "paused",
+			sessionTimerState : "paused",
+			breakTimerState : "paused",
+			previousSessionTimerState : "running",
+			previousBreakTimerState : "running",
 			// When restartFlag changes value, the app restarts
+			timerEnabledFlag : false,
 			restartFlag : false,
 			sessionLength : 5,
 			breakPoint : 1,
 			breakLength : 2
 		};
-		this.timerPausedToggle = this.timerPausedToggle.bind(this);
-		this.timerReset = this.timerReset.bind(this);
+		
+		/*Handle state of timers*/
+		this.sessionTimerId = "sessionTimer";
+		this.breakTimerId = "breakTimer";
+		this.updateTimerState = this.updateTimerState.bind(this);
+		
+		/*Handle UI changes*/
+		this.reset = this.reset.bind(this);
+		this.toggleTimer = this.toggleTimer.bind(this);
 		this.sessionLengthChange = this.sessionLengthChange.bind(this);
 		this.breakPointChange = this.breakPointChange.bind(this);
 		this.breakLengthChange = this.breakLengthChange.bind(this);
-		//this.enableBreakTimer = this.breakTimer.bind(this);
 	}
 	
-	timerReset() {
+	updateTimerState(timerId, state) {
+		if(timerId === this.sessionTimerId) {
+			switch(state) {
+				case "paused" : 
+					this.setState({
+						sessionTimerState : "paused"
+					});
+				break;
+				case "running" :
+					this.setState({
+						sessionTimerState : "running"
+					});
+				break;
+				default : 
+					console.log("Unknown argument given in updateTimerState function.");
+				break;
+			}
+		} else if (timerId === this.breakTimerId) {
+			switch(state) {
+				case "paused" : 
+					this.setState({
+						breakTimerState : "paused"
+					});
+				break;
+				case "running" :
+					this.setState({
+						breakTimerState : "running"
+					});
+				break;
+				default : 
+					console.log("Unknown argument given in updateTimerState function.");
+				break;
+			}
+		} else {
+			console.log("Unknown argument given in updateTimerState function.");
+		}
+	}
+	
+	toggleTimer(e) {
+		if(this.state.timerEnabledFlag) {
+			e.target.classList.remove("fa-pause");
+			e.target.classList.add("fa-play");
+			this.setState({
+				timerEnabledFlag : false,
+				previousSessionTimerState : this.state.sessionTimerState,
+				previousBreakTimerState : this.state.previousBreakTimerState
+			});
+			this.updateTimerState(this.state.sessionTimerId, "paused");
+			this.updateTimerState(this.state.breakTimerId, "paused");
+		} else {
+			e.target.classList.remove("fa-play");
+			e.target.classList.add("fa-pause");
+			this.setState({
+				timerEnabledFlag : true
+			});
+			this.updateTimerState(this.state.sessionTimerId, this.state.previousSessionTimerState);
+			this.updateTimerState(this.state.breakTimerId, this.state.previousBreakTimerState);
+		}
+	}
+	
+	reset() {
 		if(this.state.restartFlag) {
 			this.setState({
 				restartFlag : false
@@ -35,31 +103,6 @@ class App extends React.Component {
 			});
 		}
 	}
-	
-	timerPausedToggle(e) {
-		if(!this.state.timerPaused) {
-			this.setState({
-				timerPaused : true,
-				sessionProgressBarEnabled : "paused",
-				breakProgressBarEnabled : "paused"
-			});
-			e.target.classList.remove("fa-pause");
-			e.target.classList.add("fa-play");
-			
-		} else {
-			this.setState({
-				timerPaused : false,
-				sessionProgressBarEnabled : "running",
-				breakProgressBarEnabled : "running"
-			});
-			e.target.classList.remove("fa-play");
-			e.target.classList.add("fa-pause");
-		}
-	}
-	
-	/*enableBreakTimer() {
-		
-	}*/
 	
 	sessionLengthChange(e) {
 		if(e.target.value === "+") {
@@ -135,9 +178,9 @@ class App extends React.Component {
 
 	render() {
 		let totalSeconds = this.state.sessionLength * 60;
-		let style = {};
-		if(this.state.timerPaused) {
-			style = {
+		let buttonStyle = {};
+		if(this.state.timerEnabledFlag) {
+			buttonStyle = {
 				pointerEvents : "none",
 				color : "#182f54"
 			};
@@ -147,28 +190,43 @@ class App extends React.Component {
 			<div className="App">
 				<div className="timer-container">
 					<Timer
-						timerReset={this.timerReset}
-						timerPaused={this.state.timerPaused}
+						updateTimerState={this.updateTimerState}
+						
+						sessionTimerState={this.state.sessionTimerState}
+						breakTimerState={this.state.breakTimerState}
+						
+						sessionTimerId={this.sessionTimerId}
+						breakTimerId={this.breakTimerId}
+						
 						sessionLength={this.state.sessionLength}
-						restartFlag={this.state.restartFlag}
 						breakPoint={this.state.breakPoint}
 						breakLength={this.state.breakLength}
+						
+						restartFlag={this.state.restartFlag}
 					/>
 					
 					<CircularProgressBar
-						id={"sessionProgressBar"}
+						id={this.sessionTimerId}
+						sessionTimerId={this.sessionTimerId}
+						breakTimerId={this.breakTimerId}
+						
+						sessionTimerState={this.state.sessionTimerState}
 						restartFlag={this.state.restartFlag}
+						
 						countDownTime={totalSeconds}
-						progressBarEnabled={this.state.sessionProgressBarEnabled}
 						progressBarSize={0.7}
 						progressBarColor={"#4287f5"}
 					/>
 					
 					<CircularProgressBar
-						id={"breakProgressBar"}
+						id={this.breakTimerId}
+						sessionTimerId={this.sessionTimerId}
+						breakTimerId={this.breakTimerId}
+						
+						breakTimerState={this.state.breakTimerState}
 						restartFlag={this.state.restartFlag}
+						
 						countDownTime={totalSeconds}
-						progressBarEnabled={this.state.breakProgressBarEnabled}
 						progressBarSize={0.9}
 						progressBarColor={"#4ffff5"}
 					/>
@@ -182,13 +240,13 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator"
 							onClick={this.sessionLengthChange}
 							value="+"
-							style={style}
+							style={buttonStyle}
 						/>
 						<div className="control-number">{this.state.sessionLength}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.sessionLengthChange}
 							value="-"
-							style={style}
+							style={buttonStyle}
 						/>
 					</div>
 				</fieldset>
@@ -201,13 +259,13 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakPointChange}
 							value="+"
-							style={style}
+							style={buttonStyle}
 						/>
 						<div className="control-number">{this.state.breakPoint}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakPointChange}
 							value="-"
-							style={style}
+							style={buttonStyle}
 						/>
 					</div>
 				</fieldset>
@@ -220,24 +278,24 @@ class App extends React.Component {
 						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakLengthChange}
 							value="+"
-							style={style}
+							style={buttonStyle}
 						/>
 						<div className="control-number">{this.state.breakLength}</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakLengthChange}
 							value="-" 
-							style={style}
+							style={buttonStyle}
 						/>
 					</div>
 				</fieldset>
 				
 				<div className="control-container" side="bottom-second">
 					<i
-						onClick={this.timerPausedToggle}
+						onClick={this.toggleTimer}
 						className="button button-control fa fa-play"
 					/>
 					<i
-						onClick={this.timerReset}
+						onClick={this.reset}
 						className="button button-control fa fa-refresh"
 					/>
 				</div>
