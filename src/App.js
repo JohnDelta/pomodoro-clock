@@ -17,7 +17,7 @@ class App extends React.Component {
 			restartFlag : false,
 			sessionLength : 5,
 			breakPoint : 1,
-			breakLength : 2
+			breakLength : 1
 		};
 		
 		/*Handle state of timers*/
@@ -183,7 +183,7 @@ class App extends React.Component {
 
 	render() {
 		let sessionTotalSeconds = this.state.sessionLength * 60;
-		let breakTotalSeconds = this.state.breakLength * 60;
+		let breakTotalSeconds = this.state.breakLength * 60 + 1;
 		let buttonStyle = {};
 		if(this.state.timerEnabledFlag) {
 			buttonStyle = {

@@ -71,7 +71,7 @@ class Timer extends React.Component {
 					}
 				}
 				
-				if(minutesToBreakPoint === 0) {
+				if(minutesToBreakPoint <= 0) {
 					this.props.updateTimerState(this.props.breakTimerId, "running");
 				}
 				
@@ -86,7 +86,7 @@ class Timer extends React.Component {
 					sessionSeconds : seconds,
 					minutesToBreakPoint : minutesToBreakPoint
 				});
-			},1000);
+			}, 1000);
 		} else if(sessionTimerState === "paused") {
 			clearInterval(this.timerIntervalID);
 		} else {
@@ -95,12 +95,38 @@ class Timer extends React.Component {
 	}
 	
 	updateBreakTimer(breakTimerState) {
-		this.props.updateTimerState(this.props.sessionTimerId, "paused");
-		
 		if(breakTimerState === "running") {
-			console.log("I'm running!");
+			this.props.updateTimerState(this.props.sessionTimerId, "paused");
+			
+			this.breakTimerIntervalID = setInterval(() => {
+				let seconds = this.state.breakSeconds;
+				let minutes = this.state.breakMinutes;
+				
+				seconds--;
+				if(seconds < 0) {
+					seconds = 59;
+					minutes--;
+				}
+				
+				if(minutes < 0) {
+					minutes = this.state.breakLength;
+					seconds = 0;
+					
+					this.setState({
+						minutesToBreakPoint : this.props.breakPoint
+					});
+					this.props.updateTimerState(this.props.breakTimerId, "paused");
+					this.props.updateTimerState(this.props.sessionTimerId, "running");
+				}
+				
+				this.setState({
+					breakSeconds : seconds,
+					breakMinutes : minutes
+				});
+			}, 1000);
+			
 		} else if (breakTimerState === "paused") {
-			console.log("I'm paused.");
+			clearInterval(this.breakTimerIntervalID);
 		} else {
 			console.log("Unknown argument given in updateBreakTimer function.");
 		}
@@ -125,17 +151,30 @@ class Timer extends React.Component {
 	}
 
 	render() {	
-		let time = "";
-		if(this.state.sessionMinutes < 10) time = "0" + this.state.sessionMinutes;
-		else time = this.state.sessionMinutes;
-		time += ":";
-		if(this.state.sessionSeconds < 10) time += "0" + this.state.sessionSeconds;
-		else time += this.state.sessionSeconds;
+		let sessionTime = "";
+		if(this.state.sessionMinutes < 10) sessionTime = "0" + this.state.sessionMinutes;
+		else sessionTime = this.state.sessionMinutes;
+		sessionTime += ":";
+		if(this.state.sessionSeconds < 10) sessionTime += "0" + this.state.sessionSeconds;
+		else sessionTime += this.state.sessionSeconds;
+		
+		let breakTime = "";
+		if(this.state.breakMinutes < 10) breakTime = "0" + this.state.breakMinutes;
+		else breakTime = this.state.breakMinutes;
+		breakTime += ":";
+		if(this.state.breakSeconds < 10) breakTime += "0" + this.state.breakSeconds;
+		else breakTime += this.state.breakSeconds;
 		
 		return (
 			<div className="Timer">
 				<div className="display">
-					{time}
+					<div className="sessionTime">
+						{sessionTime}
+					</div>
+					
+					<div className="breakTime">
+						{breakTime}
+					</div>
 				</div>
 			</div>
 		);
