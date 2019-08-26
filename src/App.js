@@ -14,7 +14,8 @@ class App extends React.Component {
 			
 			// When restartFlag changes value, the app restarts
 			timerEnabledFlag : false,
-			restartFlag : false,
+			resetSessionTimerFlag : false,
+			resetBreakTimerFlag : false,
 			sessionLength : 5,
 			breakPoint : 1,
 			breakLength : 1
@@ -27,6 +28,7 @@ class App extends React.Component {
 		
 		/*Handle UI changes*/
 		this.reset = this.reset.bind(this);
+		this.resetBtn = this.resetBtn.bind(this);
 		this.toggleTimer = this.toggleTimer.bind(this);
 		this.sessionLengthChange = this.sessionLengthChange.bind(this);
 		this.breakPointChange = this.breakPointChange.bind(this);
@@ -72,9 +74,10 @@ class App extends React.Component {
 	}
 	
 	toggleTimer(e) {
+		let id = document.getElementById("toggleTimerBtn");
 		if(this.state.timerEnabledFlag) {
-			e.target.classList.remove("fa-pause");
-			e.target.classList.add("fa-play");
+			id.classList.remove("fa-pause");
+			id.classList.add("fa-play");
 			
 			this.setState({
 				timerEnabledFlag : false,
@@ -85,8 +88,8 @@ class App extends React.Component {
 			this.updateTimerState(this.sessionTimerId, "paused");
 			this.updateTimerState(this.breakTimerId, "paused");
 		} else {
-			e.target.classList.remove("fa-play");
-			e.target.classList.add("fa-pause");
+			id.classList.remove("fa-play");
+			id.classList.add("fa-pause");
 			
 			this.setState({
 				timerEnabledFlag : true
@@ -97,16 +100,39 @@ class App extends React.Component {
 		}
 	}
 	
-	reset() {
-		if(this.state.restartFlag) {
+	reset(type="all") {
+		if(type === "all") {
 			this.setState({
-				restartFlag : false
+				resetSessionTimerFlag : !this.state.resetSessionTimerFlag,
+				resetBreakTimerFlag : !this.state.resetBreakTimerFlag
 			});
-		} else {
+			
+			let id = document.getElementById("toggleTimerBtn");
+			id.classList.remove("fa-pause");
+			id.classList.remove("fa-play");
+			id.classList.add("fa-play");
+			
 			this.setState({
-				restartFlag : true
+				timerEnabledFlag : false,
+				previousSessionTimerState : "running",
+				previousBreakTimerState : "paused"
+			});
+			
+			this.updateTimerState(this.sessionTimerId, "paused");
+			this.updateTimerState(this.breakTimerId, "paused");
+		} else if (type === "sessionTimer") {
+			this.setState({
+				resetSessionTimerFlag : !this.state.resetSessionTimerFlag
+			});
+		} else if (type === "breakTimer") {
+			this.setState({
+				resetBreakTimerFlag : !this.state.resetBreakTimerFlag
 			});
 		}
+	}
+	
+	resetBtn(e) {
+		this.reset();
 	}
 	
 	sessionLengthChange(e) {
@@ -208,7 +234,7 @@ class App extends React.Component {
 						breakPoint={this.state.breakPoint}
 						breakLength={this.state.breakLength}
 						
-						restartFlag={this.state.restartFlag}
+						restartFlag={this.state.resetSessionTimerFlag}
 						reset={this.reset}
 					/>
 					
@@ -218,7 +244,7 @@ class App extends React.Component {
 						breakTimerId={this.breakTimerId}
 						
 						sessionTimerState={this.state.sessionTimerState}
-						restartFlag={this.state.restartFlag}
+						restartFlag={this.state.resetSessionTimerFlag}
 						
 						countDownTime={sessionTotalSeconds}
 						progressBarSize={0.7}
@@ -231,7 +257,7 @@ class App extends React.Component {
 						breakTimerId={this.breakTimerId}
 						
 						breakTimerState={this.state.breakTimerState}
-						restartFlag={this.state.restartFlag}
+						restartFlag={this.state.resetBreakTimerFlag}
 						
 						countDownTime={breakTotalSeconds}
 						progressBarSize={0.9}
@@ -298,11 +324,12 @@ class App extends React.Component {
 				
 				<div className="control-container" side="bottom-second">
 					<i
+						id="toggleTimerBtn"
 						onClick={this.toggleTimer}
 						className="button button-control fa fa-play"
 					/>
 					<i
-						onClick={this.reset}
+						onClick={this.resetBtn}
 						className="button button-control fa fa-refresh"
 					/>
 				</div>
