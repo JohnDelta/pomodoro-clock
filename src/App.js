@@ -10,7 +10,8 @@ class App extends React.Component {
 			sessionTimerState : "paused",
 			breakTimerState : "paused",
 			previousSessionTimerState : "running",
-			previousBreakTimerState : "running",
+			previousBreakTimerState : "paused",
+			
 			// When restartFlag changes value, the app restarts
 			timerEnabledFlag : false,
 			restartFlag : false,
@@ -74,21 +75,25 @@ class App extends React.Component {
 		if(this.state.timerEnabledFlag) {
 			e.target.classList.remove("fa-pause");
 			e.target.classList.add("fa-play");
+			
 			this.setState({
 				timerEnabledFlag : false,
 				previousSessionTimerState : this.state.sessionTimerState,
-				previousBreakTimerState : this.state.previousBreakTimerState
+				previousBreakTimerState : this.state.breakTimerState
 			});
-			this.updateTimerState(this.state.sessionTimerId, "paused");
-			this.updateTimerState(this.state.breakTimerId, "paused");
+			
+			this.updateTimerState(this.sessionTimerId, "paused");
+			this.updateTimerState(this.breakTimerId, "paused");
 		} else {
 			e.target.classList.remove("fa-play");
 			e.target.classList.add("fa-pause");
+			
 			this.setState({
 				timerEnabledFlag : true
 			});
-			this.updateTimerState(this.state.sessionTimerId, this.state.previousSessionTimerState);
-			this.updateTimerState(this.state.breakTimerId, this.state.previousBreakTimerState);
+			
+			this.updateTimerState(this.sessionTimerId, this.state.previousSessionTimerState);
+			this.updateTimerState(this.breakTimerId, this.state.previousBreakTimerState);
 		}
 	}
 	
@@ -177,7 +182,8 @@ class App extends React.Component {
 	}
 
 	render() {
-		let totalSeconds = this.state.sessionLength * 60;
+		let sessionTotalSeconds = this.state.sessionLength * 60;
+		let breakTotalSeconds = this.state.breakLength * 60;
 		let buttonStyle = {};
 		if(this.state.timerEnabledFlag) {
 			buttonStyle = {
@@ -203,9 +209,10 @@ class App extends React.Component {
 						breakLength={this.state.breakLength}
 						
 						restartFlag={this.state.restartFlag}
+						reset={this.reset}
 					/>
 					
-					<CircularProgressBar
+					<CircularProgressBar //Session Progress Bar Timer
 						id={this.sessionTimerId}
 						sessionTimerId={this.sessionTimerId}
 						breakTimerId={this.breakTimerId}
@@ -213,12 +220,12 @@ class App extends React.Component {
 						sessionTimerState={this.state.sessionTimerState}
 						restartFlag={this.state.restartFlag}
 						
-						countDownTime={totalSeconds}
+						countDownTime={sessionTotalSeconds}
 						progressBarSize={0.7}
 						progressBarColor={"#4287f5"}
 					/>
 					
-					<CircularProgressBar
+					<CircularProgressBar //Break Progress Bar Timer
 						id={this.breakTimerId}
 						sessionTimerId={this.sessionTimerId}
 						breakTimerId={this.breakTimerId}
@@ -226,9 +233,9 @@ class App extends React.Component {
 						breakTimerState={this.state.breakTimerState}
 						restartFlag={this.state.restartFlag}
 						
-						countDownTime={totalSeconds}
+						countDownTime={breakTotalSeconds}
 						progressBarSize={0.9}
-						progressBarColor={"#4ffff5"}
+						progressBarColor={"#91d5ff"}
 					/>
 				</div>
 				

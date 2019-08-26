@@ -71,12 +71,14 @@ class Timer extends React.Component {
 					}
 				}
 				
-				if(minutes < 0) {
-					console.log("stop!!!");
+				if(minutesToBreakPoint === 0) {
+					this.props.updateTimerState(this.props.breakTimerId, "running");
 				}
 				
-				if(minutesToBreakPoint <= 0) {
-					this.props.updateTimerState(this.props.breakTimerId, "running");
+				if(minutes < 0) {
+					console.log("stop!!!");
+					this.props.updateTimerState(this.props.sessionTimerId, "paused");
+					this.props.reset();
 				}
 				
 				this.setState({
