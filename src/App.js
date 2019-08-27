@@ -151,12 +151,18 @@ class App extends React.Component {
 				this.setState({
 					sessionLength : this.state.sessionLength - 1
 				});
+				if(this.state.sessionLength - 1 < this.state.breakPoint) {
+					this.setState({
+						breakPoint : this.state.sessionLength - 1
+					});
+				}
 			} else {
 				this.setState({
 					sessionLength : 59
 				});
 			}
 		}
+		this.reset();
 	}
 	
 	breakPointChange(e) {

@@ -4,15 +4,12 @@ class Timer extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			sessionLength : this.props.sessionLength,
 			sessionMinutes : this.props.sessionLength,
 			sessionSeconds : 0,
 			
-			breakLength : this.props.breakLength,
 			breakMinutes : this.props.breakLength,
 			breakSeconds : 0,
 			
-			breakPoint : this.props.breakPoint,
 			minutesToBreakPoint : this.props.breakPoint,
 			
 			sessionTimerState : this.props.sessionTimerState,
@@ -66,7 +63,7 @@ class Timer extends React.Component {
 				}
 				
 				if(seconds === 0) {
-					if(minutes !== this.state.sessionLength) {//don't break from the starting point
+					if(minutes !== this.props.sessionLength) {//don't break from the starting point
 						minutesToBreakPoint--;
 					}
 				}
@@ -109,7 +106,7 @@ class Timer extends React.Component {
 				}
 				
 				if(minutes < 0) {
-					minutes = this.state.breakLength;
+					minutes = this.props.breakLength;
 					seconds = 0;
 					
 					this.setState({
@@ -144,7 +141,6 @@ class Timer extends React.Component {
 			breakSeconds : 0,
 			
 			minutesToBreakPoint : this.props.breakPoint,
-			breakPoint : this.props.breakPoint
 		});
 		
 		this.props.updateTimerState(this.props.sessionTimerId, "paused");
