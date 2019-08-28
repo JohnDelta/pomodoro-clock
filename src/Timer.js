@@ -83,6 +83,8 @@ class Timer extends React.Component {
 					sessionSeconds : seconds,
 					minutesToBreakPoint : minutesToBreakPoint
 				});
+				
+				this.props.updateSessionSecondsLeft(minutes * 60 + seconds);
 			}, 1000);
 		} else if(sessionTimerState === "paused") {
 			clearInterval(this.timerIntervalID);
@@ -121,6 +123,8 @@ class Timer extends React.Component {
 					breakSeconds : seconds,
 					breakMinutes : minutes
 				});
+				
+				this.props.updateBreakSecondsLeft(minutes * 60 + seconds);
 			}, 1000);
 			
 		} else if (breakTimerState === "paused") {
@@ -132,22 +136,24 @@ class Timer extends React.Component {
 	
 	reset() {
 		this.setState({
-			sessionLength : this.props.sessionLength,
 			sessionSeconds : 0,
 			sessionMinutes : this.props.sessionLength,
 			
-			breakLength : this.props.breakLength,
 			breakMinutes : this.props.breakLength,
 			breakSeconds : 0,
 			
 			minutesToBreakPoint : this.props.breakPoint,
 		});
 		
+		this.props.updateSessionSecondsLeft(this.props.sessionLength * 60);
+		this.props.updateBreakSecondsLeft(this.props.breakLength * 60);
+		
 		this.props.updateTimerState(this.props.sessionTimerId, "paused");
 		this.props.updateTimerState(this.props.breakTimerId, "paused");
 	}
 
-	render() {	
+	render() {
+		// Session time string
 		let sessionTime = "";
 		if(this.state.sessionMinutes < 10) sessionTime = "0" + this.state.sessionMinutes;
 		else sessionTime = this.state.sessionMinutes;
@@ -155,6 +161,7 @@ class Timer extends React.Component {
 		if(this.state.sessionSeconds < 10) sessionTime += "0" + this.state.sessionSeconds;
 		else sessionTime += this.state.sessionSeconds;
 		
+		// Break timer string
 		let breakTime = "";
 		if(this.state.breakMinutes < 10) breakTime = "0" + this.state.breakMinutes;
 		else breakTime = this.state.breakMinutes;
@@ -162,14 +169,24 @@ class Timer extends React.Component {
 		if(this.state.breakSeconds < 10) breakTime += "0" + this.state.breakSeconds;
 		else breakTime += this.state.breakSeconds;
 		
+		// paused & running state timer style
+		let sessionTimerStyle = {};
+		let breakTimerStyle = {};
+		if(this.state.sessionTimerState === "paused") {
+			sessionTimerStyle = {opacity : "0.8"};
+		}
+		if(this.state.breakTimerState === "paused") {
+			breakTimerStyle = {opacity : "0.8"};
+		}
+		
 		return (
 			<div className="Timer">
 				<div className="display">
-					<div className="sessionTime">
+					<div className="sessionTime" style={sessionTimerStyle}>
 						{sessionTime}
 					</div>
 					
-					<div className="breakTime">
+					<div className="breakTime" style={breakTimerStyle}>
 						{breakTime}
 					</div>
 				</div>

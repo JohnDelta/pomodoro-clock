@@ -33,6 +33,7 @@ class CircularProgressBar extends React.Component {
 	}
 	
 	render() {
+		/* Initialize animation state depending the timer state which belongs to it*/
 		let animationState = "";
 		if(this.props.id === this.props.sessionTimerId) {
 			animationState = this.props.sessionTimerState;
@@ -40,6 +41,15 @@ class CircularProgressBar extends React.Component {
 			animationState = this.props.breakTimerState;
 		}
 		
+		/* Initialize progress bar style depending the timer & aninmation state */
+		let cssCircularProgressBar = {
+			transform : 'scale('+this.props.progressBarSize+')'
+		};
+		if(animationState === "paused") {
+			cssCircularProgressBar.opacity = "0.7";
+		}
+		
+		/* Initialize animation duration given the countDownTime */
 		let cssLeftSpin = {
 			animationDuration : this.props.countDownTime+'s',
 			animationPlayState : animationState,
@@ -55,9 +65,6 @@ class CircularProgressBar extends React.Component {
 			animationDelay : this.props.countDownTime/2+'s',
 			animationPlayState : animationState
 		};
-		let cssCircularProgressBar = {
-			transform : 'scale('+this.props.progressBarSize+')'
-		};		
 		
 		return (
 			<div id={this.props.id+"progressBar"} className="CircularProgressBar" style={cssCircularProgressBar} >
