@@ -44,7 +44,7 @@ class CircularProgressBar extends React.Component {
 		/* Initialize progress bar style depending the timer & aninmation state */
 		let cssCircularProgressBar = {};
 		if(animationState === "paused") {
-			cssCircularProgressBar.opacity = "0.7";
+			cssCircularProgressBar.opacity = "0.5";
 		}
 		
 		/* Initialize animation duration given the countDownTime */

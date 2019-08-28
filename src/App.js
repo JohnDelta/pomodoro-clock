@@ -346,6 +346,17 @@ class App extends React.Component {
 						className="button button-control fa fa-refresh"
 					/>
 				</div>
+				
+				<div className="footer">
+					<a 
+						className="author"
+						href="https://github.com/JohnDelta"
+						rel="noopener noreferrer"
+						target="_blank" 
+						title="visit my site!">
+						By John Delta
+					</a>
+				</div>
 			</div>
 		);
 	}

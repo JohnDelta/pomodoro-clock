@@ -143,9 +143,6 @@ class Timer extends React.Component {
 			minutesToBreakPoint : this.props.breakPoint,
 		});
 		
-		this.props.updateSessionSecondsLeft(this.props.sessionLength * 60);
-		this.props.updateBreakSecondsLeft(this.props.breakLength * 60);
-		
 		this.props.updateTimerState(this.props.sessionTimerId, "paused");
 		this.props.updateTimerState(this.props.breakTimerId, "paused");
 	}

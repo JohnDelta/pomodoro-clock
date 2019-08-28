@@ -13,7 +13,8 @@
 
 .App {
 	width : 100vw;
-	min-height : 540px;
+	min-height : 560px;
+	overflow-y : scroll;
 	height : 100vh;
 	display : grid;
 	grid-template-areas : 
@@ -26,6 +27,7 @@
 	justify-items : center;
 	background-color : #212121;
 	font-family : 'Josefin Sans', sans-serif;
+	align-items : center;
 	align-content : center;
 	grid-column-gap : 20px;
 }
@@ -37,6 +39,12 @@
 	align-items : center;
 	background-color : inherit;
 	margin : 15.5vh 0px 12.5vh 0px;
+}
+
+@media only screen and (min-width : 380px) {
+	.timer-container {
+		margin : 19vh 0px 16vh 0px;
+	}
 }
 
 .container-title {
@@ -67,12 +75,13 @@
 			'left-side-container timer-container right-side-container'
 			'first-bottom-container first-bottom-container first-bottom-container'
 			'second-bottom-container second-bottom-container second-bottom-container'
+			'. footer .'
 		;
 		grid-gap : 20px 45px;
 	}
 	
 	.timer-container {
-		margin : 0px;
+		margin : 20vh 70px 14vh 60px;
 	}
 	
 	.content {
@@ -81,17 +90,39 @@
 		justify-items : center;
 		grid-row-gap : 5px;
 	}
+	
+	.container-title {
+		font-size : 1.8em;
+		width : 110px;
+	}
+	
+	.control-container {
+		width : 120px;
+	}
 }
 
 .control-number {
 	color : #4287f5;
 	font-family : 'Orbitron', sans-serif;
 	font-size : 1.5em;
+	min-width : 35px;
+	min-height : 30px;
+	text-align : center;
 }
 
 .control-operator {
 	color : #4287f5;
 	font-size : 1.5em;
+}
+
+@media only screen and (min-width : 768px) {
+	.control-number {
+		font-size : 1.8em;
+	}
+	
+	.control-operator {
+		font-size : 1.8em;
+	}
 }
 
 .control-container[side~=left] {
@@ -126,8 +157,46 @@
 	grid-template-rows : auto;
 	justify-content : center;
 	grid-column-gap : 20px;
-	margin-top : 20px;
+	margin-top : 10px;
+	margin-bottom : 20px;
 	border : none;
+}
+
+.footer {
+	position : absolute;
+	bottom : 5px;
+	width : 100%;
+}
+
+.author {
+	display : inline-block;
+	width : 100%;
+	text-align : center;
+	text-decoration : none;
+	color : #4287f5;
+	opacity : 0.8;
+	font-size : 0.9em;
+}
+
+@media only screen and (min-width : 768px) {
+	.footer {
+		grid-area : footer;
+		position : relative;
+		display : grid;
+		justify-content : center;
+	}
+	
+	.author {
+		font-size : 1.2em;
+	}
+}
+
+.author:hover {
+	cursor : pointer;
+}
+
+.author:active {
+	opacity : 1;
 }
 
 .display {
@@ -149,6 +218,16 @@
 	color : #91d5ff;
 }
 
+@media only screen and (min-width : 768px) {
+	.sessionTime {
+		font-size : 3.6em;
+	}
+	
+	.breakTime {
+		font-size : 2.8em;
+	}
+}
+
 .button {
 	z-index : 20;
 	color : #4287f5;
@@ -168,6 +247,10 @@
 	cursor : pointer;
 }
 
+.button-control {
+	font-size : 3.2em;
+}
+
 @media screen only and (min-width : 768px) {
 	.button:hover {
 		cursor : pointer;
@@ -176,6 +259,3 @@
 	}
 }
 
-.button-control {
-	font-size : 3.2em;
-}
