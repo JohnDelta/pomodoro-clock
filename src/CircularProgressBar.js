@@ -42,9 +42,7 @@ class CircularProgressBar extends React.Component {
 		}
 		
 		/* Initialize progress bar style depending the timer & aninmation state */
-		let cssCircularProgressBar = {
-			transform : 'scale('+this.props.progressBarSize+')'
-		};
+		let cssCircularProgressBar = {};
 		if(animationState === "paused") {
 			cssCircularProgressBar.opacity = "0.7";
 		}
@@ -67,7 +65,11 @@ class CircularProgressBar extends React.Component {
 		};
 		
 		return (
-			<div id={this.props.id+"progressBar"} className="CircularProgressBar" style={cssCircularProgressBar} >
+			<div 
+				id={this.props.id+"progressBar"} 
+				className="CircularProgressBar" 
+				style={cssCircularProgressBar}
+			>
 				<div className="start-gap" part="left" />
 				<div className="start-gap" part="right" />
 				<div className="circle-background" />

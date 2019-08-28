@@ -18,8 +18,6 @@ class App extends React.Component {
 			sessionLength : 5,
 			breakPoint : 1,
 			breakLength : 1,
-			sessionSecondsLeft : 5 * 60,
-			breakSecondsLeft : 1 * 60,
 		};
 		
 		/*Handle state of timers*/
@@ -27,12 +25,6 @@ class App extends React.Component {
 		this.breakTimerId = "breakTimer";
 		// State can be : "paused" and "running"
 		this.updateTimerState = this.updateTimerState.bind(this);
-		/*
-			Keep "total seconds left" and update the animation duration of progress
-			bars width them to maintain them updated and synchronized.
-		*/
-		this.updateSessionSecondsLeft = this.updateSessionSecondsLeft.bind(this);
-		this.updateBreakSecondsLeft = this.updateBreakSecondsLeft.bind(this);
 		
 		/*Handle UI changes*/
 		this.reset = this.reset.bind(this); // reset UI values
@@ -145,18 +137,6 @@ class App extends React.Component {
 		this.reset();
 	}
 	
-	updateSessionSecondsLeft(seconds) {
-		this.setState({
-			sessionSecondsLeft : seconds
-		});
-	}
-	
-	updateBreakSecondsLeft(seconds) {
-		this.setState({
-			breakSecondsLeft : seconds
-		});
-	}
-	
 	sessionLengthChange(e) {
 		if(e.target.value === "+") {
 			if(this.state.sessionLength < 59) {
@@ -239,6 +219,9 @@ class App extends React.Component {
 	}
 
 	render() {
+		let sessionSecondsLeft = this.state.sessionLength * 60;
+		let breakSecondsLeft = this.state.breakLength * 60;
+		
 		let buttonStyle = {};
 		if(this.state.timerEnabledFlag) {
 			buttonStyle = {
@@ -278,8 +261,7 @@ class App extends React.Component {
 						sessionTimerState={this.state.sessionTimerState}
 						restartFlag={this.state.resetSessionTimerFlag}
 						
-						countDownTime={this.state.sessionSecondsLeft}
-						progressBarSize={0.7}
+						countDownTime={sessionSecondsLeft}
 						progressBarColor={"#4287f5"}
 					/>
 					
@@ -291,8 +273,7 @@ class App extends React.Component {
 						breakTimerState={this.state.breakTimerState}
 						restartFlag={this.state.resetBreakTimerFlag}
 						
-						countDownTime={this.state.breakSecondsLeft}
-						progressBarSize={0.9}
+						countDownTime={breakSecondsLeft}
 						progressBarColor={"#91d5ff"}
 					/>
 				</div>

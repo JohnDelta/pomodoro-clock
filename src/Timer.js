@@ -84,7 +84,6 @@ class Timer extends React.Component {
 					minutesToBreakPoint : minutesToBreakPoint
 				});
 				
-				this.props.updateSessionSecondsLeft(minutes * 60 + seconds);
 			}, 1000);
 		} else if(sessionTimerState === "paused") {
 			clearInterval(this.timerIntervalID);
@@ -124,7 +123,6 @@ class Timer extends React.Component {
 					breakMinutes : minutes
 				});
 				
-				this.props.updateBreakSecondsLeft(minutes * 60 + seconds);
 			}, 1000);
 			
 		} else if (breakTimerState === "paused") {
