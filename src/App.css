@@ -22,6 +22,7 @@
 		'timer-container timer-container timer-container'
 		'first-bottom-container first-bottom-container first-bottom-container'
 		'second-bottom-container second-bottom-container second-bottom-container'
+		'footer footer footer'
 	;
 	justify-content : center;
 	justify-items : center;
@@ -135,7 +136,7 @@
 
 .control-container[side~=bottom-first] {
 	grid-area : first-bottom-container;
-	width : 140px;
+	width : 160px;
 }
 
 .control-container[side~=bottom-first] .content {
@@ -147,7 +148,11 @@
 }
 
 .control-container[side~=bottom-first] .container-title {
-	width : 100%;
+	display : inline-block;
+	width : 125px;
+}
+
+#breakLengthFlag {
 }
 
 .control-container[side~=bottom-second] {
@@ -163,14 +168,10 @@
 }
 
 .footer {
-	position : absolute;
-	bottom : 5px;
-	width : 100%;
+	grid-area : footer;
 }
 
 .author {
-	display : inline-block;
-	width : 100%;
 	text-align : center;
 	text-decoration : none;
 	color : #4287f5;
@@ -179,13 +180,6 @@
 }
 
 @media only screen and (min-width : 768px) {
-	.footer {
-		grid-area : footer;
-		position : relative;
-		display : grid;
-		justify-content : center;
-	}
-	
 	.author {
 		font-size : 1.2em;
 	}

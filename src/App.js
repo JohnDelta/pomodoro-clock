@@ -15,6 +15,7 @@ class App extends React.Component {
 			timerEnabledFlag : false,
 			resetSessionTimerFlag : false,
 			resetBreakTimerFlag : false,
+			breakLengthFlag : true,
 			sessionLength : 5,
 			breakPoint : 1,
 			breakLength : 1,
@@ -33,6 +34,7 @@ class App extends React.Component {
 		this.sessionLengthChange = this.sessionLengthChange.bind(this);
 		this.breakPointChange = this.breakPointChange.bind(this);
 		this.breakLengthChange = this.breakLengthChange.bind(this);
+		this.breakLengthFlagChange = this.breakLengthFlagChange.bind(this);
 	}
 	
 	updateTimerState(timerId, state) {
@@ -217,6 +219,12 @@ class App extends React.Component {
 		}
 		this.reset();
 	}
+	
+	breakLengthFlagChange(e) {
+		this.setState({
+			breakLengthFlag : !this.state.breakLengthFlag
+		});
+	}
 
 	render() {
 		let sessionSecondsLeft = this.state.sessionLength * 60;
@@ -318,6 +326,12 @@ class App extends React.Component {
 				
 				<fieldset className="control-container" side="bottom-first">
 					<legend>
+						<input 
+							type="checkbox" 
+							id="breakLengthFlag" 
+							onChange={this.breakLengthFlagChange}
+							checked={this.state.breakLengthFlag}
+						/>
 						<p className="container-title">Break Length</p>
 					</legend>
 					<div className="content">
