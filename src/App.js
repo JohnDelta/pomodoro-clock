@@ -221,9 +221,19 @@ class App extends React.Component {
 	}
 	
 	breakLengthFlagChange(e) {
+		let flag = !this.state.breakLengthFlag;
 		this.setState({
-			breakLengthFlag : !this.state.breakLengthFlag
+			breakLengthFlag : flag
 		});
+		
+		let el = document.getElementById(e.target.id);
+		
+		if(flag) {
+			el.style.opacity = 1;
+		} else {
+			el.style.opacity = 0;
+		}
+		this.reset();
 	}
 
 	render() {
@@ -231,11 +241,30 @@ class App extends React.Component {
 		let breakSecondsLeft = this.state.breakLength * 60;
 		
 		let buttonStyle = {};
+		let breakLengthStyle = {};
+		breakLengthStyle.progressBarColor = "#91d5ff";
+		
 		if(this.state.timerEnabledFlag) {
 			buttonStyle = {
 				pointerEvents : "none",
 				color : "#182f54"
 			};
+			breakLengthStyle.button = {
+				pointerEvents : "none",
+				color : "#182f54"
+			};
+			breakLengthStyle.num = {};
+		}
+		
+		if(!this.state.breakLengthFlag) {
+			breakLengthStyle.button = {
+				pointerEvents : "none",
+				color : "#182f54"
+			};
+			breakLengthStyle.num = {
+				color : "#182f54"
+			};
+			breakLengthStyle.progressBarColor = "#182f54";
 		}
 
 		return (
@@ -256,6 +285,8 @@ class App extends React.Component {
 						
 						updateSessionSecondsLeft={this.updateSessionSecondsLeft}
 						updateBreakSecondsLeft={this.updateBreakSecondsLeft}
+						
+						breakLengthFlag={this.state.breakLengthFlag}
 						
 						restartFlag={this.state.resetSessionTimerFlag}
 						reset={this.reset}
@@ -282,7 +313,7 @@ class App extends React.Component {
 						restartFlag={this.state.resetBreakTimerFlag}
 						
 						countDownTime={breakSecondsLeft}
-						progressBarColor={"#91d5ff"}
+						progressBarColor={breakLengthStyle.progressBarColor}
 					/>
 				</div>
 				
@@ -326,25 +357,32 @@ class App extends React.Component {
 				
 				<fieldset className="control-container" side="bottom-first">
 					<legend>
-						<input 
-							type="checkbox" 
-							id="breakLengthFlag" 
-							onChange={this.breakLengthFlagChange}
-							checked={this.state.breakLengthFlag}
-						/>
+						<div
+							className="checkbox"
+							onClick={this.breakLengthFlagChange} >
+							<i
+								id="breakLengthFlag"
+								className="fa fa-check" 
+							/>
+						</div>
 						<p className="container-title">Break Length</p>
 					</legend>
 					<div className="content">
 						<button className="button fa fa-plus control-operator" 
 							onClick={this.breakLengthChange}
 							value="+"
-							style={buttonStyle}
+							style={breakLengthStyle.button}
 						/>
-						<div className="control-number">{this.state.breakLength}</div>
+						<div 
+							className="control-number" 
+							style={breakLengthStyle.num}
+						>
+							{this.state.breakLength}
+						</div>
 						<button className="button fa fa-minus control-operator" 
 							onClick={this.breakLengthChange}
 							value="-" 
-							style={buttonStyle}
+							style={breakLengthStyle.button}
 						/>
 					</div>
 				</fieldset>

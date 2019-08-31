@@ -63,7 +63,8 @@ class Timer extends React.Component {
 				}
 				
 				if(seconds === 0) {
-					if(minutes !== this.props.sessionLength) {//don't break from the starting point
+					if(minutes !== this.props.sessionLength//don't break from the starting point
+							&& this.props.breakLengthFlag) {
 						minutesToBreakPoint--;
 					}
 				}
@@ -74,16 +75,15 @@ class Timer extends React.Component {
 				
 				if(minutes < 0) {
 					console.log("stop!!!");
-					this.props.updateTimerState(this.props.sessionTimerId, "paused");
+					clearInterval(this.timerIntervalID);
 					this.props.reset();
+				} else {
+					this.setState({
+						sessionMinutes : minutes,
+						sessionSeconds : seconds,
+						minutesToBreakPoint : minutesToBreakPoint
+					});
 				}
-				
-				this.setState({
-					sessionMinutes : minutes,
-					sessionSeconds : seconds,
-					minutesToBreakPoint : minutesToBreakPoint
-				});
-				
 			}, 1000);
 		} else if(sessionTimerState === "paused") {
 			clearInterval(this.timerIntervalID);
@@ -172,6 +172,10 @@ class Timer extends React.Component {
 		}
 		if(this.state.breakTimerState === "paused") {
 			breakTimerStyle = {opacity : "0.8"};
+		}
+		
+		if(!this.props.breakLengthFlag) {
+			breakTimerStyle.color = "#182f54";
 		}
 		
 		return (

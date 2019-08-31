@@ -147,12 +147,35 @@
 	grid-column-gap : 10px;
 }
 
+.control-container[side~=bottom-first] legend {
+	display : flex;
+	justify-content : center;
+	align-items : center;
+}
+
 .control-container[side~=bottom-first] .container-title {
 	display : inline-block;
 	width : 125px;
 }
 
-#breakLengthFlag {
+.checkbox {
+	margin : 1px 1px 1px 3px;
+	display : inline;
+	border : 2px solid #4287f5;
+	border-radius : 5px;
+}
+
+.checkbox:hover {
+	cursor : pointer;
+}
+
+.checkbox:active i {
+	color : #91d5ff;
+}
+
+.checkbox i {
+	color : #4287f5;
+	margin : 1px;
 }
 
 .control-container[side~=bottom-second] {
