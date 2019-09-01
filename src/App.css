@@ -86,7 +86,7 @@
 	}
 	
 	.timer-container {
-		margin : 20vh 80px 0px 80px;
+		margin : 20vh 60px 0px 60px;
 	}
 	
 	.content {
@@ -97,7 +97,7 @@
 	}
 	
 	.container-title {
-		font-size : 1.8em;
+		font-size : 1.6em;
 		width : 110px;
 	}
 	
@@ -280,6 +280,9 @@
 }
 
 @media only screen and (min-width : 768px) {
+	.display {
+		width : 200px;
+	}
 	.sessionTime {
 		font-size : 3.6em;
 	}

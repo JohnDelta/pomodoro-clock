@@ -49,10 +49,10 @@
 
 @media only screen and (min-width : 768px) {
 	.CircularProgressBar[id~=breakTimerprogressBar] {
-		transform : scale(1.2);
+		transform : scale(1.1);
 	}
 	.CircularProgressBar[id~=sessionTimerprogressBar] {
-		transform : scale(1);
+		transform : scale(0.9);
 	}
 }
 
