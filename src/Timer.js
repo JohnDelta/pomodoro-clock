@@ -74,12 +74,13 @@ class Timer extends React.Component {
 				
 				if(seconds === 0) {
 					if(minutes !== this.props.sessionLength//don't break from the starting point
-							&& this.props.breakLengthFlag) {
-						minutesToBreakPoint--;
+						&& this.props.breakLengthFlag) {
+							minutesToBreakPoint--;
 					}
 				}
 				
 				if(minutesToBreakPoint <= 0) {
+					/*Ring one time to notify that the break has started*/
 					if(this.state.volumeFlag) {
 						let times = 0;
 						this.audio.addEventListener('ended',() => {
@@ -87,7 +88,7 @@ class Timer extends React.Component {
 							if(times < 1) {
 								this.audio.play();
 							}
-						}, false);
+						});
 						this.audio.play();
 					}
 					
@@ -95,14 +96,15 @@ class Timer extends React.Component {
 				}
 				
 				if(minutes < 0) {
+					/*Ring three times to notify that the session has finished*/
 					if(this.state.volumeFlag) {
 						let times = 0;
 						this.audio.addEventListener('ended',() => {
 							times++;
-							if(times < 2) {
+							if(times < 3) {
 								this.audio.play();
 							}
-						}, false);
+						});
 						this.audio.play();
 					}
 					
@@ -138,14 +140,15 @@ class Timer extends React.Component {
 				}
 				
 				if(minutes < 0) {
-					if(this.state.volumeFlag) {
+					/*Ring two times to notify that the break has finished*/
+					if(this.state.volumeFlag && this.state.sessionMinutes > 0) {
 						let times = 0;
 						this.audio.addEventListener('ended',() => {
 							times++;
-							if(times < 1) {
+							if(times < 2) {
 								this.audio.play();
 							}
-						}, false);
+						});
 						this.audio.play();
 					}
 					
