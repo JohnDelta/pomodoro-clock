@@ -3,6 +3,17 @@ import './App.css';
 import CircularProgressBar from './CircularProgressBar.js';
 import Timer from './Timer.js';
 
+/*
+
+ok i guess now i need to change the style again.
+* make the titles a bit smaller
+* The progress bar smaller too.
+Next : 
+* add sound effect (find them first ...)
+* add enable sound effect button
+
+*/
+
 class App extends React.Component {
 	constructor(props) {
 		super(props);
@@ -16,7 +27,7 @@ class App extends React.Component {
 			resetSessionTimerFlag : false,
 			resetBreakTimerFlag : false,
 			breakLengthFlag : true,
-			sessionLength : 5,
+			sessionLength : 2,
 			breakPoint : 1,
 			breakLength : 1,
 		};

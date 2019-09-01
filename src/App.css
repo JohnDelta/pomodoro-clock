@@ -235,6 +235,24 @@
 	color : #91d5ff;
 }
 
+#volume {
+	align-self:center;
+	border : none;
+	background-color : inherit;
+	color : #4287f5;
+	outline : none;
+	z-index:20;
+	font-size : 1.1em;
+}
+
+#volume:hover {
+	cursor : pointer;
+}
+
+#volume:active {
+	color : #91d5ff;
+}
+
 @media only screen and (min-width : 768px) {
 	.sessionTime {
 		font-size : 3.6em;
@@ -242,6 +260,10 @@
 	
 	.breakTime {
 		font-size : 2.8em;
+	}
+	
+	#volume {
+		font-size : 2em;
 	}
 }
 

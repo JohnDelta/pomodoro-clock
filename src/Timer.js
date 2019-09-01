@@ -1,5 +1,9 @@
 import React from 'react';
 
+/*
+	Beep sound : https://freesound.org/data/previews/402/402853_7769958-lq.mp3
+*/
+
 class Timer extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,8 +19,12 @@ class Timer extends React.Component {
 			sessionTimerState : this.props.sessionTimerState,
 			breakTimerState : this.props.breakTimerState,
 			
-			restartFlag : this.props.restartFlag
+			restartFlag : this.props.restartFlag,
+			
+			volumeFlag : true
 		};
+		
+		this.audio = new Audio("https://freesound.org/data/previews/402/402853_7769958-lq.mp3");
 		
 		this.timerIntervalID = 0;
 		this.breakTimerIntervalID = 0;
@@ -25,6 +33,8 @@ class Timer extends React.Component {
 		this.updateBreakTimer = this.updateBreakTimer.bind(this);
 		
 		this.reset = this.reset.bind(this);
+		
+		this.volumeChange = this.volumeChange.bind(this);
 	}
 	
 	componentDidUpdate() {
@@ -70,11 +80,32 @@ class Timer extends React.Component {
 				}
 				
 				if(minutesToBreakPoint <= 0) {
+					if(this.state.volumeFlag) {
+						let times = 0;
+						this.audio.addEventListener('ended',() => {
+							times++;
+							if(times < 1) {
+								this.audio.play();
+							}
+						}, false);
+						this.audio.play();
+					}
+					
 					this.props.updateTimerState(this.props.breakTimerId, "running");
 				}
 				
 				if(minutes < 0) {
-					console.log("stop!!!");
+					if(this.state.volumeFlag) {
+						let times = 0;
+						this.audio.addEventListener('ended',() => {
+							times++;
+							if(times < 2) {
+								this.audio.play();
+							}
+						}, false);
+						this.audio.play();
+					}
+					
 					clearInterval(this.timerIntervalID);
 					this.props.reset();
 				} else {
@@ -107,12 +138,24 @@ class Timer extends React.Component {
 				}
 				
 				if(minutes < 0) {
+					if(this.state.volumeFlag) {
+						let times = 0;
+						this.audio.addEventListener('ended',() => {
+							times++;
+							if(times < 1) {
+								this.audio.play();
+							}
+						}, false);
+						this.audio.play();
+					}
+					
 					minutes = this.props.breakLength;
 					seconds = 0;
 					
 					this.setState({
 						minutesToBreakPoint : this.props.breakPoint
 					});
+					
 					this.props.reset("breakTimer");
 					this.props.updateTimerState(this.props.breakTimerId, "paused");
 					this.props.updateTimerState(this.props.sessionTimerId, "running");
@@ -140,11 +183,27 @@ class Timer extends React.Component {
 			breakMinutes : this.props.breakLength,
 			breakSeconds : 0,
 			
-			minutesToBreakPoint : this.props.breakPoint,
+			minutesToBreakPoint : this.props.breakPoint
 		});
 		
 		this.props.updateTimerState(this.props.sessionTimerId, "paused");
 		this.props.updateTimerState(this.props.breakTimerId, "paused");
+	}
+	
+	volumeChange(e) {
+		let flag = !this.state.volumeFlag;
+		this.setState({
+			volumeFlag : flag
+		});
+		
+		let id = document.getElementById(e.target.id);
+		if(flag) {
+			id.classList.remove("fa-volume-off");
+			id.classList.add("fa-volume-up");
+		} else {
+			id.classList.remove("fa-volume-up");
+			id.classList.add("fa-volume-off");
+		}
 	}
 
 	render() {
@@ -181,6 +240,8 @@ class Timer extends React.Component {
 		return (
 			<div className="Timer">
 				<div className="display">
+					<button id="volume" onClick={this.volumeChange} className="fa fa-volume-up" />
+				
 					<div className="sessionTime" style={sessionTimerStyle}>
 						{sessionTime}
 					</div>
