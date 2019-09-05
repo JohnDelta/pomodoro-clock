@@ -14,45 +14,65 @@
 }
 
 .CircularProgressBar[id~=breakTimerprogressBar] {
-	transform : scale(0.75);
+	-webkit-transform : scale(0.75);
+	    -ms-transform : scale(0.75);
+	        transform : scale(0.75);
 }
 .CircularProgressBar[id~=sessionTimerprogressBar] {
-	transform : scale(0.6);
+	-webkit-transform : scale(0.6);
+	    -ms-transform : scale(0.6);
+	        transform : scale(0.6);
 }
 
 @media only screen and (min-width : 380px) {
 	.CircularProgressBar[id~=breakTimerprogressBar] {
-		transform : scale(0.9);
+		-webkit-transform : scale(0.9);
+		    -ms-transform : scale(0.9);
+		        transform : scale(0.9);
 	}
 	.CircularProgressBar[id~=sessionTimerprogressBar] {
-		transform : scale(0.7);
+		-webkit-transform : scale(0.7);
+		    -ms-transform : scale(0.7);
+		        transform : scale(0.7);
 	}
 }
 
 @media only screen and (min-width : 400px) {
 	.CircularProgressBar[id~=breakTimerprogressBar] {
-		transform : scale(0.95);
+		-webkit-transform : scale(0.95);
+		    -ms-transform : scale(0.95);
+		        transform : scale(0.95);
 	}
 	.CircularProgressBar[id~=sessionTimerprogressBar] {
-		transform : scale(0.75);
+		-webkit-transform : scale(0.75);
+		    -ms-transform : scale(0.75);
+		        transform : scale(0.75);
 	}
 }
 
 @media only screen and (min-width : 420px) {
 	.CircularProgressBar[id~=breakTimerprogressBar] {
-		transform : scale(1);
+		-webkit-transform : scale(1);
+		    -ms-transform : scale(1);
+		        transform : scale(1);
 	}
 	.CircularProgressBar[id~=sessionTimerprogressBar] {
-		transform : scale(0.8);
+		-webkit-transform : scale(0.8);
+		    -ms-transform : scale(0.8);
+		        transform : scale(0.8);
 	}
 }
 
 @media only screen and (min-width : 768px) {
 	.CircularProgressBar[id~=breakTimerprogressBar] {
-		transform : scale(1.1);
+		-webkit-transform : scale(1.1);
+		    -ms-transform : scale(1.1);
+		        transform : scale(1.1);
 	}
 	.CircularProgressBar[id~=sessionTimerprogressBar] {
-		transform : scale(0.9);
+		-webkit-transform : scale(0.9);
+		    -ms-transform : scale(0.9);
+		        transform : scale(0.9);
 	}
 }
 
@@ -81,7 +101,8 @@
 	z-index : 10;
 	-webkit-animation-timing-function : linear;
 	        animation-timing-function : linear;	
-	animation-fill-mode : forwards;
+	-webkit-animation-fill-mode : forwards;	
+	        animation-fill-mode : forwards;
 }
 
 .circle-background {
@@ -103,16 +124,21 @@
 }
 
 .start-gap[part~=left] {
-	transform : skewX(20deg);
+	-webkit-transform : skewX(20deg);
+	    -ms-transform : skewX(20deg);
+	        transform : skewX(20deg);
 }
 
 .start-gap[part~=right] {
-	transform : skewX(-20deg);
+	-webkit-transform : skewX(-20deg);
+	    -ms-transform : skewX(-20deg);
+	        transform : skewX(-20deg);
 }
 
 .right-spin {
 	-webkit-transform : rotate(180deg);
-			transform : rotate(180deg);
+			-ms-transform : rotate(180deg);
+	    transform : rotate(180deg);
 	-webkit-animation-name : right-spin;
 	        animation-name : right-spin;
 }
@@ -122,10 +148,32 @@
 	        animation-name : left-spin;
 }
 
+@-webkit-keyframes right-spin {
+	from {
+		-webkit-transform : rotate(180deg);
+		        transform : rotate(180deg);
+	}
+	to {
+		-webkit-transform : rotate(0deg);
+		        transform : rotate(0deg);
+	}
+}
+
 @keyframes right-spin {
 	from {
 		-webkit-transform : rotate(180deg);
 		        transform : rotate(180deg);
+	}
+	to {
+		-webkit-transform : rotate(0deg);
+		        transform : rotate(0deg);
+	}
+}
+
+@-webkit-keyframes left-spin {
+	from {
+		-webkit-transform : rotate(360deg);
+		        transform : rotate(360deg);
 	}
 	to {
 		-webkit-transform : rotate(0deg);
@@ -141,6 +189,12 @@
 	to {
 		-webkit-transform : rotate(0deg);
 		        transform : rotate(0deg);
+	}
+}
+
+@-webkit-keyframes wrapper-show {
+	to {
+		clip : rect(0px,300px,300px,149px);
 	}
 }
 
